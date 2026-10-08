@@ -93,6 +93,15 @@ local function createSettings()
 	}, "Rounds every amount to this coin. Amounts smaller than one coin still show the next coin down.")
 	checkbox("showZero", "List items with no value",
 		"Also list items that have no auction or vendor price (quest items, keys...).")
+	checkbox("tooltipCounts", "Show who has it on item tooltips",
+		"Item tooltips list which of your characters have that item and how many, in their bags and in their bank"
+			.. (ns.HAS_WARBAND and ", with the warband bank on its own line." or "."))
+	dropdown("tooltipSpacing", "Blank line on item tooltips", {
+		{ "above", "Above Hoard Info" },
+		{ "below", "Below Hoard Info" },
+		{ "both", "Above and below" },
+		{ "none", "None" },
+	}, "Where a blank line goes to set the Hoard Info lines apart from the rest of the tooltip.")
 
 	layout:AddInitializer(CreateSettingsButtonInitializer("Window position", "Reset", function()
 		ns.ResetWindowPosition()

@@ -11,6 +11,7 @@
 --   Report.lua   totals and item lists built from the saved data
 --   Options.lua  Esc > Options > AddOns > Hoard Value
 --   Minimap.lua  minimap button and addon compartment entry
+--   Tooltip.lua  who has an item, on item tooltips
 --   UI.lua       the report window
 --
 -- The files share the addon's private table `ns`. They talk through messages
@@ -112,6 +113,8 @@ ns.DEFAULTS = {
 	showZero = false,      -- list items that are worth nothing
 	precision = "gold",    -- smallest coin shown: "copper" | "silver" | "gold"
 	minimap = true,
+	tooltipCounts = true,  -- who has an item, on its tooltip
+	tooltipSpacing = "above", -- blank line around those lines: "above" | "below" | "both" | "none"
 	minimapAngle = 200,
 	tab = 1,
 }

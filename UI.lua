@@ -117,7 +117,11 @@ end
 ---------------------------------------------------------------------------
 
 local function itemTooltip(row)
-	if not pcall(GameTooltip.SetHyperlink, GameTooltip, row.link) then
+	-- The lines below already say where the item is; skip the item-tooltip ones.
+	ns.ownItemTooltip = true
+	local ok = pcall(GameTooltip.SetHyperlink, GameTooltip, row.link)
+	ns.ownItemTooltip = false
+	if not ok then
 		GameTooltip:SetText(row.name ~= "" and row.name or "Loading...")
 	end
 	GameTooltip:AddLine(" ")

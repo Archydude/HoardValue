@@ -23,11 +23,11 @@ globals = {
 read_globals = {
 	-- Lua extras WoW adds
 	"strsplit", "strtrim", "tinsert", "wipe", "time",
-	"geterrorhandler", "securecallfunction",
+	"geterrorhandler", "issecretvalue", "securecallfunction",
 
 	-- Game API
 	"Auctionator", "TSM_API",
-	"C_Bank", "C_Container", "C_Item", "C_Timer", "C_TooltipInfo",
+	"C_Bank", "C_Container", "C_Item", "C_Timer", "C_TooltipInfo", "TooltipDataProcessor",
 	"Enum", "ItemLocation",
 	"GetBuildInfo", "GetCursorPosition", "GetItemInfo", "GetItemInfoInstant",
 	"GetMinimapShape", "GetMoney", "GetMoneyString", "GetNormalizedRealmName", "GetRealmName",
@@ -36,7 +36,7 @@ read_globals = {
 	"RAID_CLASS_COLORS", "SOUNDKIT", "WOW_PROJECT_ID", "WOW_PROJECT_MAINLINE",
 
 	-- UI
-	"AddonCompartmentFrame", "GameTooltip", "Minimap", "UIParent", "UISpecialFrames",
+	"AddonCompartmentFrame", "GameTooltip", "ItemRefTooltip", "Minimap", "UIParent", "UISpecialFrames",
 	"BreakUpLargeNumbers", "ButtonFrameTemplate_HideButtonBar", "ButtonFrameTemplate_HidePortrait",
 	"CreateDataProvider", "CreateFrame", "CreateScrollBoxListLinearView",
 	"CreateSettingsButtonInitializer", "CreateSettingsListSectionHeaderInitializer",
