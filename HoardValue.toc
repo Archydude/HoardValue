@@ -11,6 +11,7 @@
 ## AddonCompartmentFuncOnLeave: HoardValue_OnAddonCompartmentLeave
 ## Category-enUS: Inventory
 ## X-License: MIT
+## X-Curse-Project-ID: 1727473
 
 Libs\LibStub\LibStub.lua
 Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
