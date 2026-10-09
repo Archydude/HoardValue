@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.2
+- Fixed: Hoard Info showed nothing on a material or crafted item when you only owned a different quality of it. Hovering any quality now lists every quality you own, one line per character and quality, with its quality icon.
+
 ## 1.1.1
 - The minimap button now works with minimap button collectors, and drags around the minimap like other addons' buttons. It stays where you put it.
 - /hoard minimap hides or shows the minimap button.

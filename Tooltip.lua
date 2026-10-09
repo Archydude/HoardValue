@@ -11,37 +11,71 @@ local WARBAND = "#warband" -- owner key for the warband bank
 -- Who has what
 ---------------------------------------------------------------------------
 
--- itemID -> { [charKey or WARBAND] = { bags = n, bank = n } }. Built from the
--- saved data the first time a tooltip needs it after the data changed.
-local index
+-- Crafting materials (and crafted items) come in qualities, and each quality is
+-- its own item. They're grouped by name so every quality you own shows on any
+-- quality's tooltip.
+local QUALITY_ICON = "|A:Professions%-ChatIcon%-Quality.-|a"
+
+local GetItemInfo = C_Item and C_Item.GetItemInfo or GetItemInfo
+
+-- What a link's item is filed under: "q:<name>" for an item with a quality,
+-- or its itemID. Also returns the quality icon and tier.
+local function groupOf(link, id)
+	local icon = link:match(QUALITY_ICON)
+	if not icon then return id end
+	return "q:" .. ns.PlainName(link), icon, tonumber(icon:match("Tier(%d+)")) or 0
+end
+
+-- group -> { [owner .. tier] = { owner, icon, tier, bags, bank } }, and
+-- itemID -> group for the items saved. Built from the saved data the first time
+-- a tooltip needs it after the data changed.
+local index, groupOfID
 
 -- Saved items' keys start with their link's "item:<id>:".
 local function addItems(items, owner, where)
 	for _, item in ipairs(items or {}) do
 		local id = tonumber(item.key:match("^item:(%d+)"))
 		if id then
-			local owners = index[id]
-			if not owners then
-				owners = {}
-				index[id] = owners
+			local group, icon, tier = groupOf(item.link, id)
+			groupOfID[id] = group
+			local entries = index[group]
+			if not entries then
+				entries = {}
+				index[group] = entries
 			end
-			local place = owners[owner]
-			if not place then
-				place = { bags = 0, bank = 0 }
-				owners[owner] = place
+			local key = owner .. "#" .. (tier or 0)
+			local entry = entries[key]
+			if not entry then
+				entry = { owner = owner, icon = icon, tier = tier or 0, bags = 0, bank = 0 }
+				entries[key] = entry
 			end
-			place[where] = place[where] + item.count
+			entry[where] = entry[where] + item.count
 		end
 	end
 end
 
 local function buildIndex()
-	index = {}
+	index, groupOfID = {}, {}
 	for charKey, c in pairs(ns.db.chars) do
 		addItems(c.bags, charKey, "bags")
 		addItems(c.bank, charKey, "bank")
 	end
 	if ns.HAS_WARBAND then addItems(ns.db.warband.items, WARBAND, "bank") end
+end
+
+-- The group of the hovered item: from the saved data, or from its link when
+-- you don't own that quality.
+local function hoveredGroup(id)
+	if groupOfID[id] then return groupOfID[id] end
+	local ok, name, link = pcall(GetItemInfo, id)
+	if not (ok and link) then return id end
+	local group = groupOf(link, id)
+	if group ~= id then return group end
+	-- A material's link may come without its quality icon; ask for its quality.
+	local quality = C_TradeSkillUI and C_TradeSkillUI.GetItemReagentQualityByItemInfo
+		and C_TradeSkillUI.GetItemReagentQualityByItemInfo(id)
+	if quality and quality > 0 and name then return "q:" .. name end
+	return id
 end
 
 ns.Listen("DataChanged", function() index = nil end)
@@ -78,23 +112,33 @@ local function placeText(place)
 	return table.concat(parts, "  ")
 end
 
+-- "Name", plus the quality icon when the item has qualities.
+local function withIcon(name, entry)
+	return entry.icon and (name .. " " .. entry.icon) or name
+end
+
 local function addLines(tooltip, id)
 	if not index then buildIndex() end
-	local owners = index[id]
-	if not owners then return end
+	local entries = index[hoveredGroup(id)]
+	if not entries then return end
 
-	-- This character first, then whoever has the most.
-	local rows = {}
-	for owner, place in pairs(owners) do
-		if owner ~= WARBAND then
-			rows[#rows + 1] = { key = owner, char = ns.db.chars[owner] or {}, place = place,
-				total = place.bags + place.bank }
-		end
+	-- One row per character and quality. This character first, then whoever
+	-- has the most; the warband bank last. Best quality first within each.
+	local rows, ownerTotal = {}, {}
+	for _, entry in pairs(entries) do
+		rows[#rows + 1] = entry
+		ownerTotal[entry.owner] = (ownerTotal[entry.owner] or 0) + entry.bags + entry.bank
+	end
+	local function rank(owner)
+		return owner == ns.charKey and 0 or owner == WARBAND and 2 or 1
 	end
 	table.sort(rows, function(a, b)
-		if (a.key == ns.charKey) ~= (b.key == ns.charKey) then return a.key == ns.charKey end
-		if a.total ~= b.total then return a.total > b.total end
-		return a.key < b.key
+		if a.owner ~= b.owner then
+			if rank(a.owner) ~= rank(b.owner) then return rank(a.owner) < rank(b.owner) end
+			if ownerTotal[a.owner] ~= ownerTotal[b.owner] then return ownerTotal[a.owner] > ownerTotal[b.owner] end
+			return a.owner < b.owner
+		end
+		return a.tier > b.tier
 	end)
 
 	-- A heading, so it's clear these lines are Hoard Value's, with a blank line
@@ -103,17 +147,18 @@ local function addLines(tooltip, id)
 	if spacing == "above" or spacing == "both" then tooltip:AddLine(" ") end
 	tooltip:AddLine("Hoard Info", 1, 0.82, 0)
 
-	local total, lines = 0, 0
+	local total = 0
 	for _, row in ipairs(rows) do
-		tooltip:AddDoubleLine(charName(row.char, row.key), placeText(row.place), 1, 1, 1, 1, 1, 1)
-		total, lines = total + row.total, lines + 1
+		if row.owner == WARBAND then
+			tooltip:AddDoubleLine(withIcon("Warband bank", row), number(row.bank) .. " " .. WARBAND_ICON,
+				0, 0.8, 1, 1, 1, 1)
+		else
+			local name = charName(ns.db.chars[row.owner] or {}, row.owner)
+			tooltip:AddDoubleLine(withIcon(name, row), placeText(row), 1, 1, 1, 1, 1, 1)
+		end
+		total = total + row.bags + row.bank
 	end
-	local warband = owners[WARBAND]
-	if warband then
-		tooltip:AddDoubleLine("Warband bank", number(warband.bank) .. " " .. WARBAND_ICON, 0, 0.8, 1, 1, 1, 1)
-		total, lines = total + warband.bank, lines + 1
-	end
-	if lines > 1 then
+	if #rows > 1 then
 		tooltip:AddDoubleLine("Total", number(total), 1, 0.82, 0, 1, 1, 1)
 	end
 	if spacing == "below" or spacing == "both" then tooltip:AddLine(" ") end
