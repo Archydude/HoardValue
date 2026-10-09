@@ -11,9 +11,9 @@ local WARBAND = "#warband" -- owner key for the warband bank
 -- Who has what
 ---------------------------------------------------------------------------
 
--- Crafting materials (and crafted items) come in qualities, and each quality is
--- its own item. They're grouped by name so every quality you own shows on any
--- quality's tooltip.
+-- Crafting materials (and crafted items) come in qualities (ranks), and each
+-- rank is its own item. They're grouped by name: an item's tooltip shows the
+-- rank it is, and a material slot on a recipe or order shows every rank.
 local QUALITY_ICON = "|A:Professions%-ChatIcon%-Quality.-|a"
 
 local GetItemInfo = C_Item and C_Item.GetItemInfo or GetItemInfo
@@ -27,9 +27,9 @@ local function groupOf(link, id)
 end
 
 -- group -> { [owner .. tier] = { owner, icon, tier, bags, bank } }, and
--- itemID -> group for the items saved. Built from the saved data the first time
--- a tooltip needs it after the data changed.
-local index, groupOfID
+-- itemID -> group and tier for the items saved. Built from the saved data the
+-- first time a tooltip needs it after the data changed.
+local index, groupOfID, tierOfID
 
 -- Saved items' keys start with their link's "item:<id>:".
 local function addItems(items, owner, where)
@@ -37,7 +37,7 @@ local function addItems(items, owner, where)
 		local id = tonumber(item.key:match("^item:(%d+)"))
 		if id then
 			local group, icon, tier = groupOf(item.link, id)
-			groupOfID[id] = group
+			groupOfID[id], tierOfID[id] = group, tier
 			local entries = index[group]
 			if not entries then
 				entries = {}
@@ -55,7 +55,7 @@ local function addItems(items, owner, where)
 end
 
 local function buildIndex()
-	index, groupOfID = {}, {}
+	index, groupOfID, tierOfID = {}, {}, {}
 	for charKey, c in pairs(ns.db.chars) do
 		addItems(c.bags, charKey, "bags")
 		addItems(c.bank, charKey, "bank")
@@ -63,18 +63,18 @@ local function buildIndex()
 	if ns.HAS_WARBAND then addItems(ns.db.warband.items, WARBAND, "bank") end
 end
 
--- The group of the hovered item: from the saved data, or from its link when
--- you don't own that quality.
+-- The group and rank of the hovered item: from the saved data, or from its
+-- link when you don't own that rank. The rank is nil for items without ranks.
 local function hoveredGroup(id)
-	if groupOfID[id] then return groupOfID[id] end
+	if groupOfID[id] then return groupOfID[id], tierOfID[id] end
 	local ok, name, link = pcall(GetItemInfo, id)
 	if not (ok and link) then return id end
-	local group = groupOf(link, id)
-	if group ~= id then return group end
-	-- A material's link may come without its quality icon; ask for its quality.
+	local group, _, tier = groupOf(link, id)
+	if group ~= id then return group, tier end
+	-- A material's link may come without its quality icon; ask for its rank.
 	local quality = C_TradeSkillUI and C_TradeSkillUI.GetItemReagentQualityByItemInfo
 		and C_TradeSkillUI.GetItemReagentQualityByItemInfo(id)
-	if quality and quality > 0 and name then return "q:" .. name end
+	if quality and quality > 0 and name then return "q:" .. name, quality end
 	return id
 end
 
@@ -117,13 +117,23 @@ local function withIcon(name, entry)
 	return entry.icon and (name .. " " .. entry.icon) or name
 end
 
-local function addLines(tooltip, id)
+-- `allRanks`: show every rank of the item, not just the hovered one.
+local function addLines(tooltip, id, allRanks)
 	if not index then buildIndex() end
-	local entries = index[hoveredGroup(id)]
+	local group, tier = hoveredGroup(id)
+	local entries = index[group]
 	if not entries then return end
+	if tier and not allRanks then
+		local only = {}
+		for key, entry in pairs(entries) do
+			if entry.tier == tier then only[key] = entry end
+		end
+		if not next(only) then return end
+		entries = only
+	end
 
 	-- One row per character and quality. This character first, then whoever
-	-- has the most; the warband bank last. Best quality first within each.
+	-- has the most; the warband bank last. Rank 1 first, then rank 2, within each.
 	local rows, ownerTotal = {}, {}
 	for _, entry in pairs(entries) do
 		rows[#rows + 1] = entry
@@ -138,7 +148,7 @@ local function addLines(tooltip, id)
 			if ownerTotal[a.owner] ~= ownerTotal[b.owner] then return ownerTotal[a.owner] > ownerTotal[b.owner] end
 			return a.owner < b.owner
 		end
-		return a.tier > b.tier
+		return a.tier < b.tier
 	end)
 
 	-- A heading, so it's clear these lines are Hoard Value's, with a blank line
@@ -181,6 +191,19 @@ local function watch(tooltip)
 	pcall(tooltip.HookScript, tooltip, "OnHide", reset)
 end
 
+-- A material slot on a recipe, crafting order or customer order stands for
+-- every rank of its material, whichever rank's tooltip it shows.
+local function isMaterialSlot(tooltip)
+	local ok, frame = pcall(tooltip.GetOwner, tooltip)
+	if not ok then return false end
+	for _ = 1, 3 do
+		if type(frame) ~= "table" then return false end
+		if frame.GetReagentSlotSchematic then return true end
+		frame = frame.GetParent and frame:GetParent()
+	end
+	return false
+end
+
 -- Returns true when lines were added.
 local function onItem(tooltip, id)
 	if not (ns.db and ns.db.tooltipCounts) or ns.ownItemTooltip then return end
@@ -189,7 +212,7 @@ local function onItem(tooltip, id)
 	watch(tooltip)
 	if done[tooltip] == id then return end
 	done[tooltip] = id
-	addLines(tooltip, id)
+	addLines(tooltip, id, isMaterialSlot(tooltip))
 	return true
 end
 
