@@ -29,56 +29,38 @@ What your character and account are really worth in gold: bags, bank and warband
 ```markdown
 ## What is your hoard really worth?
 
-Hoard Value adds up everything you own and tells you, in gold, what your character and your whole account are worth: the gold you carry plus every item in your bags, your bank and your warband bank, priced with **TradeSkillMaster** or **Auctionator**.
+Hoard Value adds up everything you own and tells you, in gold, what your character and your whole account are worth: your gold plus every item in your bags, bank and warband bank, priced with **TradeSkillMaster** or **Auctionator**.
 
 ### Your net worth at a glance
 - One big total, split into **gold, bags, bank and warband bank**.
-- **This character**, **Account** (every character plus the warband bank, counted once) and **By character** tabs.
-- Hover the minimap button for your character and account totals without opening anything.
+- **This character**, **Account** and **By character** tabs.
+- Hover the minimap button for your totals without opening anything.
 
 ### Every item, most valuable first
-- A list of everything you own, sorted by value. Click any column to sort by name, quantity, price, value or where it is.
-- Search by item name or place.
-- Hover an item to see its **Hoard Info** (which of your characters have it, and where) and what each one is worth. Shift-click links it in chat.
+Everything you own in one list, sorted by value. Sort by any column, search by name or place, and hover an item to see who has it and what it's worth.
 
 ### Who has it? Right on the tooltip
-Hover any item, anywhere in the game, and **Hoard Info** shows which of your characters have it and how many: a bag icon for what's in their bags, a bank icon for what's in their bank. The warband bank gets its own line, and a total shows when the item is in more than one place. For materials and crafted items that come in ranks, an item shows its own rank, and a material slot on a recipe or crafting order shows every rank you own.
+Hover any item, anywhere in the game, and **Hoard Info** shows which of your characters have it and how many, in their bags, their bank or the warband bank.
 
 ### Realistic value
-Market prices are optimistic. Turn on **Realistic value** to see what you'd actually get selling everything: each item at the lower of its market value and the cheapest auction right now, minus the auction house's 5% cut.
+Market prices are optimistic. Turn on **Realistic value** to see what you'd actually get: each item at the lower of its market value and the cheapest auction, minus the 5% auction house cut.
 
 ### Honest about soulbound items
-Soulbound and warbound items can't go on the auction house, so they're **left out by default**. Turn them on in the options to count them at what a vendor pays.
-
-### Prices
-Uses **TradeSkillMaster** first and falls back to **Auctionator** for anything TSM has no price for. Items with no auction price, like gray junk, count at vendor price, and so does anything a vendor pays more for than the auction house. Without either addon, only vendor prices are used.
+Soulbound and warbound items can't be sold on the auction house, so they're left out by default. Turn them on to count them at vendor price.
 
 ### Retail and Classic
-Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW Forever** and **Classic Era** (including Season of Discovery and Hardcore). Classic has no warband bank, so that part is simply left out there.
+Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW Forever** and **Classic Era** (including Season of Discovery and Hardcore).
 
 ### How to use
-1. Click the coin button on the minimap, pick **Hoard Value** in the minimap's addon menu, or type **/hoard**.
-2. Visit a banker once on each character. Banks can only be read while open; Hoard Value remembers what's there and updates it every time you visit.
-3. Log in on your other characters once so they show up in the account total.
-
-### Options
-Click the gear in the window, right-click the minimap button, or type **/hoard options**:
-- Count soulbound items (at vendor price)
-- Include the warband bank in the account total
-- Price addon: Automatic, TSM only or Auctionator only
-- TSM price: market value, lowest auction, historical or region average
-- Realistic value
-- Minimap button on or off (drag it to move it; **/hoard minimap** does it too). It works with minimap button collectors.
-- Show amounts down to gold, silver or copper
-- List items with no value
-- Hoard Info on item tooltips on or off, and a blank line above it, below it, both or none
-- Reset the window's position
+1. Click the coin button on the minimap, or type **/hoard**.
+2. Visit a banker once on each character, so Hoard Value can see what's there.
+3. Log in on your other characters once so they count toward the account total.
 
 ### Good to know
-- Prices are looked up every time you open the window, so totals for your other characters follow the market even if you haven't logged in on them.
-- Tooltip counts for your other characters are from the last time you logged in on them, and banks from the last time you opened them.
-- Deleted or transferred a character? Right-click it in the **By character** tab to forget it.
-- Not counted yet: mail, items you have listed on the auction house, and equipped gear.
+- Uses TSM first, then Auctionator. Items without an auction price count at vendor price, and without either addon only vendor prices are used.
+- Other characters' items are from the last time you logged in on them, and banks from the last time you opened them.
+- Not counted yet: mail, your auctions and equipped gear.
+- Options: the gear in the window, or **/hoard options**.
 ```
 ---
 
