@@ -61,6 +61,8 @@ Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW F
 - Other characters' items are from the last time you logged in on them, and banks from the last time you opened them.
 - Not counted yet: mail, your auctions and equipped gear.
 - Options: the gear in the window, or **/hoard options**.
+
+**Feedback and bug reports are welcome** in the comments.
 ```
 ---
 
