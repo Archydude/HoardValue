@@ -6,6 +6,9 @@
 std = "lua51"
 max_line_length = false
 
+-- Embedded libraries belong to their authors.
+exclude_files = { "Libs/" }
+
 -- Event handlers and WoW callbacks often ignore some of their arguments.
 unused_args = false
 
@@ -26,11 +29,11 @@ read_globals = {
 	"geterrorhandler", "issecretvalue", "securecallfunction",
 
 	-- Game API
-	"Auctionator", "TSM_API",
+	"Auctionator", "LibStub", "TSM_API",
 	"C_Bank", "C_Container", "C_Item", "C_Timer", "C_TooltipInfo", "TooltipDataProcessor",
 	"Enum", "ItemLocation",
-	"GetBuildInfo", "GetCursorPosition", "GetItemInfo", "GetItemInfoInstant",
-	"GetMinimapShape", "GetMoney", "GetMoneyString", "GetNormalizedRealmName", "GetRealmName",
+	"GetBuildInfo", "GetItemInfo", "GetItemInfoInstant",
+	"GetMoney", "GetMoneyString", "GetNormalizedRealmName", "GetRealmName",
 	"UnitClass", "UnitName",
 	"BANK_CONTAINER", "NUM_BAG_SLOTS", "NUM_BANKBAGSLOTS",
 	"RAID_CLASS_COLORS", "SOUNDKIT", "WOW_PROJECT_ID", "WOW_PROJECT_MAINLINE",

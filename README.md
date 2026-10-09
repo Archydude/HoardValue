@@ -36,7 +36,7 @@ Click the gear in the window, right-click the minimap button, type `/hoard optio
 | Price addon | Automatic (TSM, then Auctionator for anything TSM has no price for), TSM only, or Auctionator only. |
 | TSM price | Market value (default), lowest auction right now, historical price or region market average. |
 | Realistic value | Off by default. Also a checkbox in the window. |
-| Show minimap button | On by default. Drag the button to move it. |
+| Show minimap button | On by default. Drag the button to move it. `/hoard minimap` also hides or shows it. |
 | Show amounts down to | Gold (default), silver or copper. |
 | List items with no value | Off by default. Shows quest items, keys and other things nobody pays for. |
 | Show who has it on item tooltips | On by default. Lists your characters that have the item, and the warband bank, on item tooltips. |

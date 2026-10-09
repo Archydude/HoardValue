@@ -101,8 +101,12 @@ end
 --   chars["Name-Realm"]  { name, realm, class, money, updated, bags, bank, bankScanned }
 --   warband              { money, items, scanned }
 --   pos                  window position
+--   minimapIcon          minimap button position, kept by LibDBIcon
 -- bags, bank and items are lists of { key, link, icon, count, bound, vendor }.
-local DB_VERSION = 1
+local DB_VERSION = 2
+
+-- Where the minimap button starts, in degrees around the minimap.
+local MINIMAP_START = 200
 
 ns.DEFAULTS = {
 	provider = "auto",     -- "auto" | "tsm" | "auctionator"
@@ -115,14 +119,19 @@ ns.DEFAULTS = {
 	minimap = true,
 	tooltipCounts = true,  -- who has an item, on its tooltip
 	tooltipSpacing = "above", -- blank line around those lines: "above" | "below" | "both" | "none"
-	minimapAngle = 200,
 	tab = 1,
 }
 
 -- Brings saved data from older versions up to date. Version 1 is the first
 -- release; when the layout changes, raise DB_VERSION and add a step here:
---   if db.version < 2 then ... end
+--   if db.version < 3 then ... end
 local function migrate(db)
+	local version = db.version or 0
+	if version < 2 then
+		-- 1.1.0 and older drew their own minimap button and kept its angle here.
+		db.minimapIcon = db.minimapIcon or { minimapPos = db.minimapAngle or MINIMAP_START }
+		db.minimapAngle = nil
+	end
 	db.version = DB_VERSION
 end
 
@@ -189,6 +198,10 @@ SlashCmdList.HOARDVALUE = function(msg)
 	msg = strtrim(msg or ""):lower()
 	if msg == "options" or msg == "config" then
 		ns.OpenOptions()
+	elseif msg == "minimap" then
+		ns.SetSetting("minimap", not ns.db.minimap)
+		print("|cffffd100Hoard Value|r minimap button " .. (ns.db.minimap and "shown."
+			or "hidden. Type |cffffff00/hoard minimap|r to bring it back."))
 	elseif msg == "debug" then
 		ns.PrintDebug()
 	else
