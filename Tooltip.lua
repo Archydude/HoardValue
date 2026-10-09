@@ -117,7 +117,8 @@ local function withIcon(name, entry)
 	return entry.icon and (name .. " " .. entry.icon) or name
 end
 
--- `allRanks`: show every rank of the item, not just the hovered one.
+-- `allRanks`: show every rank of the item, not just the hovered one. Returns
+-- true when lines were added.
 local function addLines(tooltip, id, allRanks)
 	if not index then buildIndex() end
 	local group, tier = hoveredGroup(id)
@@ -172,6 +173,7 @@ local function addLines(tooltip, id, allRanks)
 		tooltip:AddDoubleLine("Total", number(total), 1, 0.82, 0, 1, 1, 1)
 	end
 	if spacing == "below" or spacing == "both" then tooltip:AddLine(" ") end
+	return true
 end
 
 ---------------------------------------------------------------------------
@@ -202,6 +204,12 @@ local function isMaterialSlot(tooltip)
 		frame = frame.GetParent and frame:GetParent()
 	end
 	return false
+end
+
+-- The Hoard Info lines for one item, for the report window's own tooltips.
+-- They show even with the tooltip option off. Returns true when lines were added.
+function ns.AddHoardInfo(tooltip, id)
+	return id and addLines(tooltip, id, false) or false
 end
 
 -- Returns true when lines were added.

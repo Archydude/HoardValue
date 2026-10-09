@@ -117,17 +117,21 @@ end
 ---------------------------------------------------------------------------
 
 local function itemTooltip(row)
-	-- The lines below already say where the item is; skip the item-tooltip ones.
+	-- The Hoard Info lines are added below, so the item tooltip's own ones are
+	-- skipped (they'd be missing with the tooltip option off).
 	ns.ownItemTooltip = true
 	local ok = pcall(GameTooltip.SetHyperlink, GameTooltip, row.link)
 	ns.ownItemTooltip = false
 	if not ok then
 		GameTooltip:SetText(row.name ~= "" and row.name or "Loading...")
 	end
-	GameTooltip:AddLine(" ")
-	GameTooltip:AddLine("Hoard Value", 1, 0.82, 0)
-	for _, place in ipairs(row.places) do
-		GameTooltip:AddDoubleLine(place.where, BreakUpLargeNumbers(place.count), 1, 1, 1, 1, 1, 1)
+	if not ns.AddHoardInfo(GameTooltip, ns.ItemID(row.link)) then
+		-- Not an item the Hoard Info lines cover (a caged battle pet): where it is.
+		GameTooltip:AddLine(" ")
+		GameTooltip:AddLine("Hoard Info", 1, 0.82, 0)
+		for _, place in ipairs(row.places) do
+			GameTooltip:AddDoubleLine(place.where, BreakUpLargeNumbers(place.count), 1, 1, 1, 1, 1, 1)
+		end
 	end
 	if row.unit then
 		local label = row.how == "vendor" and "Vendor price, each" or "Auction price, each"

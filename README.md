@@ -22,7 +22,7 @@ Click the coin button on the minimap, or pick **Hoard Value** in the minimap's a
 - **Bags** are always up to date.
 - **Your bank and the warband bank** can only be read while a bank is open. Visit a banker once on each character; Hoard Value remembers what was there and updates it every time you open the bank. The footer and the **By character** tab show when each bank was last read.
 - **Other characters** show up after you log in on them once.
-- Hover an item to see where it is and its price. Shift-click links it in chat.
+- Hover an item to see its Hoard Info (which characters have it, and where) and its price. Shift-click links it in chat.
 - Hover any item in the game (bags, chat links, the auction house...) to see which of your characters have it. Counts for other characters are from the last time you logged in on them, and banks from the last time you opened them.
 - In **By character**, right-click a character you deleted or transferred to forget it.
 

@@ -39,7 +39,7 @@ Hoard Value adds up everything you own and tells you, in gold, what your charact
 ### Every item, most valuable first
 - A list of everything you own, sorted by value. Click any column to sort by name, quantity, price, value or where it is.
 - Search by item name or place.
-- Hover an item to see exactly where it is and what each one is worth. Shift-click links it in chat.
+- Hover an item to see its **Hoard Info** (which of your characters have it, and where) and what each one is worth. Shift-click links it in chat.
 
 ### Who has it? Right on the tooltip
 Hover any item, anywhere in the game, and **Hoard Info** shows which of your characters have it and how many: a bag icon for what's in their bags, a bank icon for what's in their bank. The warband bank gets its own line, and a total shows when the item is in more than one place. For materials and crafted items that come in ranks, an item shows its own rank, and a material slot on a recipe or crafting order shows every rank you own.
@@ -72,10 +72,12 @@ Click the gear in the window, right-click the minimap button, or type **/hoard o
 - Show amounts down to gold, silver or copper
 - List items with no value
 - Hoard Info on item tooltips on or off, and a blank line above it, below it, both or none
+- Reset the window's position
 
 ### Good to know
 - Prices are looked up every time you open the window, so totals for your other characters follow the market even if you haven't logged in on them.
 - Tooltip counts for your other characters are from the last time you logged in on them, and banks from the last time you opened them.
+- Deleted or transferred a character? Right-click it in the **By character** tab to forget it.
 - Not counted yet: mail, items you have listed on the auction house, and equipped gear.
 ```
 ---
@@ -84,11 +86,11 @@ Click the gear in the window, right-click the minimap button, or type **/hoard o
 
 ## B. Upload File form
 
-**File:** `dist\HoardValue-1.1.3.zip`
+**File:** `dist\HoardValue-1.1.4.zip`
 
 **Display name**
 ```
-Hoard Value 1.1.3
+Hoard Value 1.1.4
 ```
 
 **Release type:** `Release`
@@ -97,6 +99,9 @@ Hoard Value 1.1.3
 
 **Changelog** (paste only the newest part; 1.0.0 is already on CurseForge)
 ```markdown
+1.1.4
+- Items in the Hoard Value window now show the same Hoard Info lines as every other item tooltip (which characters have it, in their bags or bank, plus the warband bank), followed by the item's price. They show there even with the tooltip option off.
+
 1.1.3
 - Hoard Info and ranks: an item's tooltip now shows only the rank you're hovering. A material slot on a recipe or crafting order still shows every rank you own, rank 1 first.
 
