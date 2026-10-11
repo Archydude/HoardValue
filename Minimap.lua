@@ -29,7 +29,7 @@ local function fillTooltip(tooltip)
 		totals = { char = ns.BuildReport("char").total, account = ns.BuildReport("account").total }
 	end
 	tooltip:SetText("Hoard Value")
-	tooltip:AddDoubleLine(UnitName("player"), ns.Money(totals.char), 1, 1, 1, 1, 1, 1)
+	tooltip:AddDoubleLine(ns.PlayerName(), ns.Money(totals.char), 1, 1, 1, 1, 1, 1)
 	tooltip:AddDoubleLine("Account", ns.Money(totals.account), 1, 1, 1, 1, 1, 1)
 	tooltip:AddLine(" ")
 	tooltip:AddLine("Click to open, right-click for options", 0.6, 0.6, 0.6)

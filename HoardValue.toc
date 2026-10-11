@@ -2,7 +2,7 @@
 ## Title: Hoard Value
 ## Notes: How much your character and your account are worth in gold: gold, bags, bank and warband bank, priced with TSM or Auctionator. Type /hoard.
 ## Author: Archdude
-## Version: 1.1.4
+## Version: 1.1.5
 ## OptionalDeps: TradeSkillMaster, Auctionator, LibStub, CallbackHandler-1.0, LibDataBroker-1.1, LibDBIcon-1.0
 ## SavedVariables: HoardValueDB
 ## IconTexture: Interface\Icons\INV_Misc_Coin_01

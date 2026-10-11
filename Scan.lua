@@ -199,6 +199,14 @@ end
 -- Saved snapshots
 ---------------------------------------------------------------------------
 
+-- WoW: Forever characters have a first and last name, which UnitName returns
+-- as two values (elsewhere the second is the realm, always nil for "player").
+function ns.PlayerName()
+	local first, last = UnitName("player")
+	if last and last ~= "" then return first .. " " .. last end
+	return first
+end
+
 function ns.CharData()
 	local chars = ns.db.chars
 	local c = chars[ns.charKey]
@@ -217,7 +225,7 @@ end
 
 local function scanBags()
 	local c = ns.CharData()
-	c.name = UnitName("player")
+	c.name = ns.PlayerName()
 	c.realm = GetRealmName()
 	c.class = select(2, UnitClass("player"))
 	c.money = GetMoney()
@@ -283,7 +291,13 @@ local rescan = ns.Debounce(1, function()
 end)
 
 ns.On("PLAYER_LOGIN", function()
-	ns.charKey = UnitName("player") .. "-" .. (GetNormalizedRealmName() or GetRealmName():gsub("[%s%-]", ""))
+	local realm = "-" .. (GetNormalizedRealmName() or GetRealmName():gsub("[%s%-]", ""))
+	ns.charKey = ns.PlayerName() .. realm
+	-- Older versions saved Forever characters under their first name only.
+	local chars, oldKey = ns.db.chars, UnitName("player") .. realm
+	if oldKey ~= ns.charKey and chars[oldKey] and not chars[ns.charKey] then
+		chars[ns.charKey], chars[oldKey] = chars[oldKey], nil
+	end
 	scanBags()
 	scanWarbandMoney()
 	ns.Fire("DataChanged")

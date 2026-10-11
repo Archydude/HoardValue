@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.5
+- Fixed: on WoW Forever, characters were saved under their first name only, so the window, tooltips and minimap button showed just the first name, and two characters with the same first name shared one entry. They now show by their full name. Characters you already have move over to it the next time you log in on them.
+
 ## 1.1.4
 - Items in the Hoard Value window now show the same Hoard Info lines as every other item tooltip (which characters have it, in their bags or bank, plus the warband bank), followed by the item's price. They show there even with the tooltip option off.
 
