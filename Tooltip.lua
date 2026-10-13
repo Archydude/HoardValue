@@ -19,11 +19,14 @@ local QUALITY_ICON = "|A:Professions%-ChatIcon%-Quality.-|a"
 local GetItemInfo = C_Item and C_Item.GetItemInfo or GetItemInfo
 
 -- What a link's item is filed under: "q:<name>" for an item with a quality,
--- or its itemID. Also returns the quality icon and tier.
+-- or its itemID. Also returns the quality icon and tier. A link saved before
+-- the item had loaded has no name, so the name comes from the game; until it
+-- has loaded, the item is filed under its itemID.
 local function groupOf(link, id)
 	local icon = link:match(QUALITY_ICON)
 	if not icon then return id end
-	return "q:" .. ns.PlainName(link), icon, tonumber(icon:match("Tier(%d+)")) or 0
+	local name = ns.ItemName(link)
+	return name and ("q:" .. name) or id, icon, tonumber(icon:match("Tier(%d+)")) or 0
 end
 
 -- group -> { [owner .. tier] = { owner, icon, tier, bags, bank } }, and
@@ -79,6 +82,7 @@ local function hoveredGroup(id)
 end
 
 ns.Listen("DataChanged", function() index = nil end)
+ns.Listen("ItemInfoLoaded", function() index = nil end)
 
 ---------------------------------------------------------------------------
 -- Tooltip lines
