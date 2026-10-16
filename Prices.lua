@@ -1,6 +1,7 @@
 -- Hoard Value: prices
 -- What one of an item is worth: its auction price from TSM or Auctionator, or
--- what a vendor pays, whichever is better. Bound items only count at vendor price.
+-- what a vendor pays, whichever is better. Bound and grey items only count at
+-- vendor price.
 
 local ADDON_NAME, ns = ...
 
@@ -99,8 +100,8 @@ function ns.UnitPrice(item)
 	if vendor and vendor <= 0 then vendor = nil end
 
 	local price, how
-	if item.bound then
-		-- Can't go on the auction house: worth what a vendor pays.
+	if item.bound or ns.IsPoor(item.link) then
+		-- Can't go on the auction house, or grey junk: worth what a vendor pays.
 		price, how = vendor, vendor and "vendor"
 	else
 		local ah = auctionPrice(item.link)

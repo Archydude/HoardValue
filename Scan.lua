@@ -85,6 +85,18 @@ function ns.VendorPrice(link)
 	return ok and price or nil
 end
 
+-- True for a Poor (grey) quality item. Read from the link's color, so saved
+-- links from other characters work without the item being loaded. Battle pets
+-- are left out: a grey pet still sells on the auction house.
+function ns.IsPoor(link)
+	if not link:find("|Hitem:") then return false end
+	local quality = link:match("^|cnIQ(%d+):")             -- Retail: "|cnIQ0:"
+	if quality then return quality == "0" end
+	if link:find("^|cff9d9d9d") then return true end       -- Classic: grey color
+	local ok, _, _, q = pcall(GetItemInfo, link)
+	return ok and q == 0
+end
+
 -- An item's name. A link saved before the item had loaded has an empty name
 -- ("[]"), so ask the game then; nil until it has loaded.
 function ns.ItemName(link)

@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.7
+- Gray junk now always counts at what a vendor pays for it, never at its auction house price, so a few overpriced junk listings can't inflate your total.
+
 ## 1.1.6
 - Fixed: a material slot on a recipe or crafting order could leave out a rank you own, showing only rank 1 while rank 2 sat in your bags. This happened when the game hadn't loaded that item's name yet when your bags were scanned. Every rank you own now shows.
 

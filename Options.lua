@@ -76,7 +76,7 @@ local function createSettings()
 		{ "auto", "Automatic (TSM, then Auctionator)" },
 		{ "tsm", "TradeSkillMaster only" },
 		{ "auctionator", "Auctionator only" },
-	}, "Where prices come from. Automatic uses TSM and falls back to Auctionator for items TSM has no price for. Items with no auction price count at vendor price.")
+	}, "Where prices come from. Automatic uses TSM and falls back to Auctionator for items TSM has no price for. Items with no auction price, and gray junk, count at vendor price.")
 	dropdown("tsmSource", "TSM price", TSM_SOURCES,
 		"Which TSM price to use. Market value smooths out spikes; lowest auction is what's listed right now.")
 	checkbox("realistic", "Realistic value",

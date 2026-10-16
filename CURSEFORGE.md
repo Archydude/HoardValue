@@ -57,7 +57,7 @@ Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW F
 3. Log in on your other characters once so they count toward the account total.
 
 ### Good to know
-- Uses TSM first, then Auctionator. Items without an auction price count at vendor price, and without either addon only vendor prices are used.
+- Uses TSM first, then Auctionator. Gray junk and items without an auction price count at vendor price, and without either addon only vendor prices are used.
 - Other characters' items are from the last time you logged in on them, and banks from the last time you opened them.
 - Not counted yet: mail, your auctions and equipped gear.
 - Options: the gear in the window, or **/hoard options**.
@@ -70,11 +70,11 @@ Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW F
 
 ## B. Upload File form
 
-**File:** `dist\HoardValue-1.1.6.zip`
+**File:** `dist\HoardValue-1.1.7.zip`
 
 **Display name**
 ```
-Hoard Value 1.1.6
+Hoard Value 1.1.7
 ```
 
 **Release type:** `Release`
@@ -83,6 +83,9 @@ Hoard Value 1.1.6
 
 **Changelog** (paste only the newest part; 1.0.0 is already on CurseForge)
 ```markdown
+1.1.7
+- Gray junk now always counts at what a vendor pays for it, never at its auction house price, so a few overpriced junk listings can't inflate your total.
+
 1.1.6
 - Fixed: a material slot on a recipe or crafting order could leave out a rank you own, showing only rank 1 while rank 2 sat in your bags. This happened when the game hadn't loaded that item's name yet when your bags were scanned. Every rank you own now shows.
 
