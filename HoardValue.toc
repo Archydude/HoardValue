@@ -4,7 +4,7 @@
 ## Author: Archdude
 ## Version: 1.1.7
 ## OptionalDeps: TradeSkillMaster, Auctionator, LibStub, CallbackHandler-1.0, LibDataBroker-1.1, LibDBIcon-1.0
-## SavedVariables: HoardValueDB
+## SavedVariables: HoardValueDB, HoardValueWhatsNew
 ## IconTexture: Interface\Icons\INV_Misc_Coin_01
 ## AddonCompartmentFunc: HoardValue_OnAddonCompartmentClick
 ## AddonCompartmentFuncOnEnter: HoardValue_OnAddonCompartmentEnter
@@ -25,3 +25,5 @@ Options.lua
 Minimap.lua
 Tooltip.lua
 UI.lua
+WhatsNew.lua
+WhatsNewData.lua
