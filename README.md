@@ -9,6 +9,7 @@ How much your character, and your whole account, is worth in gold: the gold you 
 - **Hoard Info on every item tooltip:** which of your characters have the item and how many, with a bag icon for their bags and a bank icon for their bank. The warband bank gets its own line, and a total shows when it's in more than one place. For items that come in ranks, an item shows only its own rank, and a material slot on a recipe or crafting order shows every rank you own, rank 1 first.
 - **Realistic value:** what you'd actually get selling everything. Each item counts at the lower of its market value and the cheapest auction right now, minus the 5% auction house cut.
 - Gray junk always counts at vendor price, and so do items with no auction price. Anything a vendor pays more for than the auction house counts at the vendor price.
+- **What's New:** after an update, a window shows what changed since the version you had. Type `/whatsnew` to open it any time.
 
 Requires **TradeSkillMaster** or **Auctionator** for auction prices. Without either, only vendor prices are used.
 

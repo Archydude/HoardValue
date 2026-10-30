@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0
+- **List every item:** a new option lists everything in your bags and banks, including soulbound and warbound items and items with no value, so you can search all of it. Bound items show their vendor price, and your totals don't change unless Count soulbound items is on.
+- Search now finds an item by character name even when it's spread across many places. Before, an item on three or more characters could be missed.
+- After an update, a What's New window shows what changed since the version you had.
+
 ## 1.1.7
 - Gray junk now always counts at what a vendor pays for it, never at its auction house price, so a few overpriced junk listings can't inflate your total.
 

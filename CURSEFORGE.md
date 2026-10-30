@@ -37,7 +37,7 @@ Hoard Value adds up everything you own and tells you, in gold, what your charact
 - Hover the minimap button for your totals without opening anything.
 
 ### Every item, most valuable first
-Everything you own in one list, sorted by value. Sort by any column, search by name or place, and hover an item to see who has it and what it's worth.
+Everything you own in one list, sorted by value. Sort by any column, search by item, character or place, and hover an item to see who has it and what it's worth. Turn on **List every item** to add soulbound and warbound items, so you can find anything on any character.
 
 ### Who has it? Right on the tooltip
 Hover any item, anywhere in the game, and **Hoard Info** shows which of your characters have it and how many, in their bags, their bank or the warband bank.
@@ -61,6 +61,7 @@ Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW F
 - Other characters' items are from the last time you logged in on them, and banks from the last time you opened them.
 - Not counted yet: mail, your auctions and equipped gear.
 - Options: the gear in the window, or **/hoard options**.
+- After an update, a What's New window shows what changed.
 
 **Feedback and bug reports are welcome** in the comments.
 ```
@@ -70,11 +71,11 @@ Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW F
 
 ## B. Upload File form
 
-**File:** `dist\HoardValue-1.1.7.zip`
+**File:** `dist\HoardValue-1.2.0.zip`
 
 **Display name**
 ```
-Hoard Value 1.1.7
+Hoard Value 1.2.0
 ```
 
 **Release type:** `Release`
@@ -83,6 +84,11 @@ Hoard Value 1.1.7
 
 **Changelog** (paste only the newest part; 1.0.0 is already on CurseForge)
 ```markdown
+1.2.0
+- **List every item:** a new option lists everything in your bags and banks, including soulbound and warbound items and items with no value, so you can search all of it. Bound items show their vendor price, and your totals don't change unless Count soulbound items is on.
+- Search now finds an item by character name even when it's spread across many places. Before, an item on three or more characters could be missed.
+- After an update, a What's New window shows what changed since the version you had.
+
 1.1.7
 - Gray junk now always counts at what a vendor pays for it, never at its auction house price, so a few overpriced junk listings can't inflate your total.
 
