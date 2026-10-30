@@ -43,7 +43,7 @@ Everything you own in one list, sorted by value. Sort by any column, search by i
 Hover any item, anywhere in the game, and **Hoard Info** shows which of your characters have it and how many, in their bags, their bank or the warband bank.
 
 ### Realistic value
-Market prices are optimistic. Turn on **Realistic value** to see what you'd actually get: each item at the lower of its market value and the cheapest auction, minus the 5% auction house cut.
+**Realistic value** shows what you'd actually get: each item at the lower of its market value and the cheapest auction, minus the 5% cut.
 
 ### Honest about soulbound items
 Soulbound and warbound items can't be sold on the auction house, so they're left out by default. Turn them on to count them at vendor price.
@@ -53,12 +53,10 @@ Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW F
 
 ### How to use
 1. Click the coin button on the minimap, or type **/hoard**.
-2. Visit a banker once on each character, so Hoard Value can see what's there.
-3. Log in on your other characters once so they count toward the account total.
+2. Log in and visit a banker once on each character, so Hoard Value can see what they have.
 
 ### Good to know
-- Uses TSM first, then Auctionator. Gray junk and items without an auction price count at vendor price, and without either addon only vendor prices are used.
-- Other characters' items are from the last time you logged in on them, and banks from the last time you opened them.
+- Uses TSM first, then Auctionator. Gray junk and items with no auction price count at vendor price.
 - Not counted yet: mail, your auctions and equipped gear.
 - Options: the gear in the window, or **/hoard options**.
 - After an update, a What's New window shows what changed.
