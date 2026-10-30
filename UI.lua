@@ -60,7 +60,7 @@ local ITEM_COLUMNS = {
 			return row.how == "vendor" and grey(ns.Money(row.unit), "999999") or ns.Money(row.unit)
 		end },
 	{ key = "value", title = "Value", width = 120, justify = "RIGHT", numeric = true,
-		text = function(row) return ns.Money(row.value) end },
+		text = function(row) return row.uncounted and grey("not counted") or ns.Money(row.value) end },
 	{ key = "where", title = "Where", width = 0, justify = "LEFT", -- width 0: the rest
 		text = function(row) return row.where end },
 }
@@ -139,7 +139,9 @@ local function itemTooltip(row)
 	else
 		GameTooltip:AddLine("No auction or vendor price", 1, 0.4, 0.4)
 	end
-	if row.bound then GameTooltip:AddLine("Bound: counted at vendor price", 0.6, 0.6, 0.6) end
+	if row.bound then
+		GameTooltip:AddLine(row.uncounted and "Bound: not counted" or "Bound: counted at vendor price", 0.6, 0.6, 0.6)
+	end
 end
 
 local function characterTooltip(row)
@@ -238,7 +240,7 @@ local function rebuild()
 		rows = view == "chars" and ns.BuildCharacterRows() or report.rows,
 		-- A price addon with no data for this realm and faction prices everything
 		-- at vendor value, which also makes Realistic value change nothing.
-		noAuctionPrices = #report.rows > 0 and report.ahPriced == 0
+		noAuctionPrices = report.countedRows > 0 and report.ahPriced == 0
 			and (ns.TSMAvailable() or ns.AuctionatorAPI() ~= nil),
 	}
 	dirty = false
@@ -256,8 +258,12 @@ local function sortRows(rows)
 	end)
 end
 
+local function listsZeroValue()
+	return ns.db.showZero or ns.db.listAll
+end
+
 local function isVisible(row)
-	if view ~= "chars" and row.value <= 0 and not ns.db.showZero then return false end
+	if view ~= "chars" and row.value <= 0 and not listsZeroValue() then return false end
 	return search == "" or row.search:find(search, 1, true) ~= nil
 end
 
@@ -335,7 +341,7 @@ local function footerText()
 		notes[#notes + 1] = format("%s bound item%s not counted", BreakUpLargeNumbers(report.boundSkipped),
 			report.boundSkipped == 1 and "" or "s")
 	end
-	if view ~= "chars" and report.zeroValue > 0 and not ns.db.showZero then
+	if view ~= "chars" and report.zeroValue > 0 and not listsZeroValue() then
 		notes[#notes + 1] = format("%d with no value hidden", report.zeroValue)
 	end
 	return table.concat(notes, "  " .. grey("-", "555555") .. "  ")

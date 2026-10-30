@@ -4,6 +4,7 @@ How much your character, and your whole account, is worth in gold: the gold you 
 
 - **Total at a glance**, split into gold, bags, bank and warband bank.
 - **Every item, most valuable first.** Click a column to sort by name, quantity, price, value or where it is. Search by item name or place.
+- **Search everything you own:** turn on **List every item** to list every bag and bank item, soulbound and warbound ones included, then search the Account tab by item or character name.
 - **Three tabs:** this character, the whole account (all characters plus the warband bank), and a per-character list.
 - **Hoard Info on every item tooltip:** which of your characters have the item and how many, with a bag icon for their bags and a bank icon for their bank. The warband bank gets its own line, and a total shows when it's in more than one place. For items that come in ranks, an item shows only its own rank, and a material slot on a recipe or crafting order shows every rank you own, rank 1 first.
 - **Realistic value:** what you'd actually get selling everything. Each item counts at the lower of its market value and the cheapest auction right now, minus the 5% auction house cut.
@@ -39,6 +40,7 @@ Click the gear in the window, right-click the minimap button, type `/hoard optio
 | Show minimap button | On by default. Drag the button to move it. `/hoard minimap` also hides or shows it. |
 | Show amounts down to | Gold (default), silver or copper. |
 | List items with no value | Off by default. Shows quest items, keys and other things nobody pays for. |
+| List every item | Off by default. Lists everything in your bags and banks, including soulbound and warbound items and items with no value. Totals don't change: bound items show their vendor price but stay out of the total unless Count soulbound items is on. |
 | Show who has it on item tooltips | On by default. Lists your characters that have the item, and the warband bank, on item tooltips. |
 | Blank line on item tooltips | Above the Hoard Info lines (default), below them, both or none. |
 | Window position: Reset | Puts the window back in the middle of the screen. |

@@ -15,25 +15,27 @@ local function newReport()
 		total = 0,
 		rows = {},        -- one per item, see addItems
 		byKey = {},
-		boundSkipped = 0, -- bound items left out
+		boundSkipped = 0, -- bound items left out of the totals
 		unpriced = 0,     -- items worth nothing
-		zeroValue = 0,    -- rows worth nothing (hidden unless "List items with no value")
+		zeroValue = 0,    -- rows worth nothing (hidden unless "List items with no value" or "List every item")
+		countedRows = 0,  -- rows that add to the totals
 		ahPriced = 0,     -- items with an auction price (0: the price addon has no data)
 	}
 end
 
 -- Adds a list of saved items to the report, merging the same item from
--- different places into one row.
+-- different places into one row. Bound items that don't count are left out, or
+-- listed with their price but no value when "List every item" is on.
 local function addItems(r, items, where, section)
 	for _, item in ipairs(items or {}) do
 		-- Saved before warbound items counted as bound (1.0.1 and older); the
 		-- next scan of that bag saves it properly.
 		if not item.bound and ns.AccountBound(item.link) then item.bound = true end
-		if item.bound and not ns.db.countBound then
-			r.boundSkipped = r.boundSkipped + item.count
-		else
+		local uncounted = item.bound and not ns.db.countBound
+		if uncounted then r.boundSkipped = r.boundSkipped + item.count end
+		if ns.db.listAll or not uncounted then
 			local unit, how = ns.UnitPrice(item)
-			local value = unit and unit * item.count or 0
+			local value = unit and not uncounted and unit * item.count or 0
 			r.sections[section] = r.sections[section] + value
 
 			local row = r.byKey[item.key]
@@ -41,11 +43,14 @@ local function addItems(r, items, where, section)
 				row = {
 					kind = "item", link = item.link, icon = item.icon, bound = item.bound,
 					name = ns.ItemName(item.link) or "", unit = unit, how = how, -- "": still loading
-					count = 0, value = 0, places = {}, placeIndex = {},
+					uncounted = uncounted, count = 0, value = 0, places = {}, placeIndex = {},
 				}
 				r.byKey[item.key] = row
 				r.rows[#r.rows + 1] = row
-				if not unit then r.unpriced = r.unpriced + 1 end
+				if not uncounted then
+					r.countedRows = r.countedRows + 1
+					if not unit then r.unpriced = r.unpriced + 1 end
+				end
 				if how == "ah" then r.ahPriced = r.ahPriced + 1 end
 			end
 			row.count = row.count + item.count
@@ -85,7 +90,11 @@ local function finish(r)
 	r.total = s.gold + s.bags + s.bank + s.warband
 	for _, row in ipairs(r.rows) do
 		row.where = placesText(row.places)
-		row.search = (row.name .. "\n" .. row.where):lower()
+		-- Every place, not row.where: a character's name has to find items that
+		-- show as "5 places".
+		local places = {}
+		for i, place in ipairs(row.places) do places[i] = place.where end
+		row.search = (row.name .. "\n" .. table.concat(places, "\n")):lower()
 		if row.value <= 0 then r.zeroValue = r.zeroValue + 1 end
 	end
 	return r

@@ -115,6 +115,7 @@ ns.DEFAULTS = {
 	countBound = false,    -- soulbound / warbound items, at vendor price
 	countWarband = true,   -- warband bank in the account total
 	showZero = false,      -- list items that are worth nothing
+	listAll = false,       -- list everything, bound items too, even if not counted
 	precision = "gold",    -- smallest coin shown: "copper" | "silver" | "gold"
 	minimap = true,
 	tooltipCounts = true,  -- who has an item, on its tooltip

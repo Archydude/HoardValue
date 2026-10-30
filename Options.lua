@@ -93,6 +93,10 @@ local function createSettings()
 	}, "Rounds every amount to this coin. Amounts smaller than one coin still show the next coin down.")
 	checkbox("showZero", "List items with no value",
 		"Also list items that have no auction or vendor price (quest items, keys...).")
+	checkbox("listAll", "List every item",
+		"List everything in your bags and banks, so you can search all of it, including "
+			.. (ns.HAS_WARBAND and "soulbound and warbound items" or "soulbound items")
+			.. " and items with no value. Totals don't change: bound items only add to them with Count soulbound items on.")
 	checkbox("tooltipCounts", "Show who has it on item tooltips",
 		"Item tooltips list which of your characters have that item and how many, in their bags and in their bank"
 			.. (ns.HAS_WARBAND and ", with the warband bank on its own line." or "."))
