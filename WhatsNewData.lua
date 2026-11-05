@@ -2,10 +2,13 @@
 ArchdudeWhatsNew:Register("HoardValue", {
 	title = "Hoard Value",
 	icon = "Interface\\Icons\\INV_Misc_Coin_01",
-	version = "1.2.0",
+	version = "1.2.1",
 	seen = "HoardValueWhatsNew",
 	saved = { "HoardValueDB" },
 	changes = {
+		{ "1.2.1",
+			"Fixed: typing in the search box of the game's options (Esc > Options) could show the error \"AddOn 'HoardValue' tried to call the protected function 'IsUserOAuthed()'\". The window position's Reset button no longer comes up in that search; it's still on Hoard Value's options page.",
+		},
 		{ "1.2.0",
 			"|cffffd100List every item:|r a new option lists everything in your bags and banks, including soulbound and warbound items and items with no value, so you can search all of it. Bound items show their vendor price, and your totals don't change unless Count soulbound items is on.",
 			"Search now finds an item by character name even when it's spread across many places. Before, an item on three or more characters could be missed.",
@@ -36,9 +39,6 @@ ArchdudeWhatsNew:Register("HoardValue", {
 		{ "1.1.0",
 			"Hoard Info on item tooltips: hover any item to see which of your characters have it and how many, with a bag icon for what's in their bags and a bank icon for what's in their bank. The warband bank gets its own line, and a total shows when the item is in more than one place.",
 			"New options: turn the tooltip lines off, and choose where a blank line goes to set them apart from the rest of the tooltip (above, below, both or none).",
-		},
-		{ "1.0.2",
-			"Fixed: warbound and Battle.net account-bound items (including \"Warbound until equipped\") were valued at their auction price even though they can't be sold. They now count as bound, like soulbound items. Items that drop as BoE in one place and warbound in another are checked copy by copy.",
 		},
 	},
 })

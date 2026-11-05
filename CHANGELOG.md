@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.1
+- Fixed: typing in the search box of the game's options (Esc > Options) could show the error "AddOn 'HoardValue' tried to call the protected function 'IsUserOAuthed()'". The window position's Reset button no longer comes up in that search; it's still on Hoard Value's options page.
+
 ## 1.2.0
 - **List every item:** a new option lists everything in your bags and banks, including soulbound and warbound items and items with no value, so you can search all of it. Bound items show their vendor price, and your totals don't change unless Count soulbound items is on.
 - Search now finds an item by character name even when it's spread across many places. Before, an item on three or more characters could be missed.

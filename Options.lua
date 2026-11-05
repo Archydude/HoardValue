@@ -107,9 +107,17 @@ local function createSettings()
 		{ "none", "None" },
 	}, "Where a blank line goes to set the Hoard Info lines apart from the rest of the tooltip.")
 
-	layout:AddInitializer(CreateSettingsButtonInitializer("Window position", "Reset", function()
-		ns.ResetWindowPosition()
-	end, "Put the Hoard Value window back in the middle of the screen.", true))
+	-- Like CreateSettingsButtonInitializer, but on our own row template (see Options.xml) and
+	-- with no search tags. Tags added from addon code are tainted, and the options search box
+	-- reads every page's tags unprotected, so the whole search turns tainted and Blizzard's
+	-- Discord button in the results gets blocked (ADDON_ACTION_FORBIDDEN on IsUserOAuthed).
+	-- Checkboxes and dropdowns are fine: Blizzard adds their tags in its own secure code.
+	layout:AddInitializer(Settings.CreateElementInitializer("HoardValueSettingsButtonTemplate", {
+		name = "Window position",
+		buttonText = "Reset",
+		buttonClick = function() ns.ResetWindowPosition() end,
+		tooltip = "Put the Hoard Value window back in the middle of the screen.",
+	}))
 
 	Settings.RegisterAddOnCategory(category)
 end

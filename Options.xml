@@ -1,0 +1,6 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<!-- Our own copy of Blizzard's options-page button row. The options list reuses rows
+	     of the same template across pages; with our own template, a row our button drew
+	     on is never handed to Blizzard's buttons (like Discord's) afterwards. -->
+	<Frame name="HoardValueSettingsButtonTemplate" inherits="SettingButtonControlTemplate" virtual="true"/>
+</Ui>

@@ -69,19 +69,22 @@ Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW F
 
 ## B. Upload File form
 
-**File:** `dist\HoardValue-1.2.0.zip`
+**File:** `dist\HoardValue-1.2.1.zip`
 
 **Display name**
 ```
-Hoard Value 1.2.0
+Hoard Value 1.2.1
 ```
 
 **Release type:** `Release`
 
-**Game versions:** Retail `12.1.0` and `12.1.5`, Mists of Pandaria Classic `5.5.4`, TBC Anniversary `2.5.6`, WoW Forever `1.60.1` (if CurseForge lists it yet; it launches November 4), Classic Era `1.15.9` (covers Season of Discovery).
+**Game versions:** Retail `12.1.0` and `12.1.5`, Mists of Pandaria Classic `5.5.4`, TBC Anniversary `2.5.6`, WoW Forever `1.60.1` (if CurseForge lists it yet), Classic Era `1.15.9` (covers Season of Discovery).
 
 **Changelog** (paste only the newest part; 1.0.0 is already on CurseForge)
 ```markdown
+1.2.1
+- Fixed: typing in the search box of the game's options (Esc > Options) could show the error "AddOn 'HoardValue' tried to call the protected function 'IsUserOAuthed()'". The window position's Reset button no longer comes up in that search; it's still on Hoard Value's options page.
+
 1.2.0
 - **List every item:** a new option lists everything in your bags and banks, including soulbound and warbound items and items with no value, so you can search all of it. Bound items show their vendor price, and your totals don't change unless Count soulbound items is on.
 - Search now finds an item by character name even when it's spread across many places. Before, an item on three or more characters could be missed.
