@@ -37,7 +37,7 @@ Hoard Value adds up everything you own and tells you, in gold, what your charact
 - Hover the minimap button for your totals without opening anything.
 
 ### Every item, most valuable first
-Everything you own in one list, sorted by value. Sort by any column, search by item, character or place, and hover an item to see who has it and what it's worth. Turn on **List every item** to add soulbound and warbound items, so you can find anything on any character.
+Everything you own in one list, sorted by value. Sort by any column, search by item name, and hover an item to see who has it and what it's worth. Turn on **List every item** to add soulbound and warbound items, so you can find anything you own.
 
 ### Who has it? Right on the tooltip
 Hover any item, anywhere in the game, and **Hoard Info** shows which of your characters have it and how many, in their bags, their bank or the warband bank.
@@ -69,11 +69,11 @@ Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW F
 
 ## B. Upload File form
 
-**File:** `dist\HoardValue-1.2.1.zip`
+**File:** `dist\HoardValue-1.2.2.zip`
 
 **Display name**
 ```
-Hoard Value 1.2.1
+Hoard Value 1.2.2
 ```
 
 **Release type:** `Release`
@@ -82,6 +82,9 @@ Hoard Value 1.2.1
 
 **Changelog** (paste only the newest part; 1.0.0 is already on CurseForge)
 ```markdown
+1.2.2
+- Search in the item list now matches item names only. Typing "bag" finds your bags, not every item kept in your bags.
+
 1.2.1
 - Fixed: typing in the search box of the game's options (Esc > Options) could show the error "AddOn 'HoardValue' tried to call the protected function 'IsUserOAuthed()'". The window position's Reset button no longer comes up in that search; it's still on Hoard Value's options page.
 

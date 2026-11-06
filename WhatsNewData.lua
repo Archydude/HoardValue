@@ -2,10 +2,13 @@
 ArchdudeWhatsNew:Register("HoardValue", {
 	title = "Hoard Value",
 	icon = "Interface\\Icons\\INV_Misc_Coin_01",
-	version = "1.2.1",
+	version = "1.2.2",
 	seen = "HoardValueWhatsNew",
 	saved = { "HoardValueDB" },
 	changes = {
+		{ "1.2.2",
+			"Search in the item list now matches item names only. Typing \"bag\" finds your bags, not every item kept in your bags.",
+		},
 		{ "1.2.1",
 			"Fixed: typing in the search box of the game's options (Esc > Options) could show the error \"AddOn 'HoardValue' tried to call the protected function 'IsUserOAuthed()'\". The window position's Reset button no longer comes up in that search; it's still on Hoard Value's options page.",
 		},
@@ -35,10 +38,6 @@ ArchdudeWhatsNew:Register("HoardValue", {
 		{ "1.1.1",
 			"The minimap button now works with minimap button collectors, and drags around the minimap like other addons' buttons. It stays where you put it.",
 			"/hoard minimap hides or shows the minimap button.",
-		},
-		{ "1.1.0",
-			"Hoard Info on item tooltips: hover any item to see which of your characters have it and how many, with a bag icon for what's in their bags and a bank icon for what's in their bank. The warband bank gets its own line, and a total shows when the item is in more than one place.",
-			"New options: turn the tooltip lines off, and choose where a blank line goes to set them apart from the rest of the tooltip (above, below, both or none).",
 		},
 	},
 })

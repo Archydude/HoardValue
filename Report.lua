@@ -90,11 +90,8 @@ local function finish(r)
 	r.total = s.gold + s.bags + s.bank + s.warband
 	for _, row in ipairs(r.rows) do
 		row.where = placesText(row.places)
-		-- Every place, not row.where: a character's name has to find items that
-		-- show as "5 places".
-		local places = {}
-		for i, place in ipairs(row.places) do places[i] = place.where end
-		row.search = (row.name .. "\n" .. table.concat(places, "\n")):lower()
+		-- Search matches the item name only, not where it is.
+		row.search = row.name:lower()
 		if row.value <= 0 then r.zeroValue = r.zeroValue + 1 end
 	end
 	return r

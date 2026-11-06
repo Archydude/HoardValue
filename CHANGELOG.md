@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.2
+- Search in the item list now matches item names only. Typing "bag" finds your bags, not every item kept in your bags.
+
 ## 1.2.1
 - Fixed: typing in the search box of the game's options (Esc > Options) could show the error "AddOn 'HoardValue' tried to call the protected function 'IsUserOAuthed()'". The window position's Reset button no longer comes up in that search; it's still on Hoard Value's options page.
 
