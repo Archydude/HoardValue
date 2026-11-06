@@ -41,7 +41,7 @@ local function addItems(r, items, where, section)
 			local row = r.byKey[item.key]
 			if not row then
 				row = {
-					kind = "item", link = item.link, icon = item.icon, bound = item.bound,
+					kind = "item", key = item.key, link = item.link, icon = item.icon, bound = item.bound,
 					name = ns.ItemName(item.link) or "", unit = unit, how = how, -- "": still loading
 					uncounted = uncounted, count = 0, value = 0, places = {}, placeIndex = {},
 				}

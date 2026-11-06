@@ -356,6 +356,83 @@ ns.On("BANKFRAME_CLOSED", function()
 end)
 
 ---------------------------------------------------------------------------
+-- Destroying items
+---------------------------------------------------------------------------
+
+-- The bags you can take items out of right now: your bags, plus the banks
+-- while one is open.
+local function reachableBags()
+	local list = {}
+	for _, bag in ipairs(BAGS) do list[#list + 1] = bag end
+	if bankMode == "full" then
+		for _, bag in ipairs(CHAR_BANK) do list[#list + 1] = bag end
+	end
+	if bankMode and ns.HAS_WARBAND then
+		for _, bag in ipairs(WARBAND_BANK) do list[#list + 1] = bag end
+	end
+	return list
+end
+
+-- Every stack of an item (a report row's key) you can reach right now, and how
+-- many that is in all.
+local function findItem(key)
+	local base = (key:gsub("#bound$", ""))
+	local stacks, total = {}, 0
+	for _, bag in ipairs(reachableBags()) do
+		for slot = 1, C_Container.GetContainerNumSlots(bag) or 0 do
+			local info = C_Container.GetContainerItemInfo(bag, slot)
+			local link = info and info.hyperlink
+			-- The cheap match first; the bound check reads the slot's tooltip.
+			-- A locked stack is being moved or was just destroyed.
+			if link and not info.isLocked and itemKey(link, false) == base
+				and itemKey(link, isBound(info, bag, slot, link)) == key then
+				local count = info.stackCount or 1
+				stacks[#stacks + 1] = { bag = bag, slot = slot, count = count }
+				total = total + count
+			end
+		end
+	end
+	return stacks, total
+end
+
+-- How many of an item you could destroy right now, and in how many stacks.
+function ns.Destroyable(key)
+	local stacks, total = findItem(key)
+	return total, #stacks
+end
+
+-- True when you have the item in a bank that isn't open, so opening it would
+-- let you destroy those too.
+function ns.InClosedBank(key)
+	local function has(items)
+		for _, item in ipairs(items or {}) do
+			if item.key == key then return true end
+		end
+		return false
+	end
+	if bankMode ~= "full" and has(ns.CharData().bank) then return true end
+	return not bankMode and ns.HAS_WARBAND and has(ns.db.warband.items) or false
+end
+
+-- Destroys one stack of the item. The game allows one destroy per click, so
+-- this has to run straight from a click, once per stack. Returns how many
+-- were destroyed (0 if the game refused).
+function ns.DestroyItemStack(key)
+	local stack = findItem(key)[1]
+	if not stack then return 0 end
+	ClearCursor()
+	C_Container.PickupContainerItem(stack.bag, stack.slot)
+	if not CursorHasItem() then return 0 end
+	DeleteCursorItem()
+	if CursorHasItem() then
+		-- Some items can't be destroyed: put it back.
+		ClearCursor()
+		return 0
+	end
+	return stack.count
+end
+
+---------------------------------------------------------------------------
 -- /hoard debug
 ---------------------------------------------------------------------------
 

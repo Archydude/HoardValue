@@ -142,6 +142,10 @@ local function itemTooltip(row)
 	if row.bound then
 		GameTooltip:AddLine(row.uncounted and "Bound: not counted" or "Bound: counted at vendor price", 0.6, 0.6, 0.6)
 	end
+	if ns.Destroyable(row.key) > 0 then
+		GameTooltip:AddLine(" ")
+		GameTooltip:AddLine("Right-click to destroy", 0.6, 0.6, 0.6)
+	end
 end
 
 local function characterTooltip(row)
@@ -171,11 +175,104 @@ local function onRowEnter(rowFrame)
 	GameTooltip:Show()
 end
 
+---------------------------------------------------------------------------
+-- Destroying an item: right-click menu, then a confirmation
+---------------------------------------------------------------------------
+
+local function chat(text)
+	print("|cffffd100Hoard Value|r " .. text)
+end
+
+local function withCount(link, count)
+	return count > 1 and (link .. " x" .. BreakUpLargeNumbers(count)) or link
+end
+
+-- The bag needs a moment to show the destroyed stack gone before the next ask.
+local NEXT_STACK_DELAY = 0.3
+
+local function stacksText(stacks)
+	return stacks == 1 and "1 stack" or format("%d stacks", stacks)
+end
+
+local askNextStack
+
+StaticPopupDialogs.HOARDVALUE_DESTROY = {
+	text = "%s",
+	button1 = "Destroy",
+	button2 = CANCEL,
+	showAlert = true,
+	timeout = 0,
+	whileDead = true,
+	hideOnEscape = true,
+	OnAccept = function(_, data)
+		local destroyed = ns.DestroyItemStack(data.key)
+		if destroyed == 0 then
+			chat("couldn't destroy " .. data.link .. ".")
+			return
+		end
+		chat("destroyed " .. withCount(data.link, destroyed) .. ".")
+		C_Timer.After(NEXT_STACK_DELAY, function() askNextStack(data) end)
+	end,
+}
+
+-- After a stack is destroyed: ask about the next one, if there's more.
+function askNextStack(data)
+	local count, stacks = ns.Destroyable(data.key)
+	if count == 0 then return end
+	local text = format("Destroy the next stack of %s?\n\n%s left in %s.\n\nThis can't be undone.",
+		data.link, BreakUpLargeNumbers(count), stacksText(stacks))
+	StaticPopup_Show("HOARDVALUE_DESTROY", text, nil, data)
+end
+
+-- Why there's nothing to destroy from here.
+local function cantDestroyText(row)
+	return ns.InClosedBank(row.key) and "Open your bank to destroy it" or "Not on this character"
+end
+
+local function confirmDestroy(row)
+	local count, stacks = ns.Destroyable(row.key)
+	if count == 0 then
+		chat(cantDestroyText(row) .. ".")
+		return
+	end
+	local text = "Destroy " .. withCount(row.link, count) .. "?"
+	if stacks > 1 then
+		text = text .. format("\n\nThat's %s. The game destroys one stack at a time, so you'll confirm each one.",
+			stacksText(stacks))
+	end
+	local left = row.count - count
+	if left > 0 then
+		text = text .. format("\n\nThe other %s stay: they're on other characters or in a bank that isn't open.",
+			BreakUpLargeNumbers(left))
+	end
+	text = text .. "\n\nThis can't be undone."
+	StaticPopup_Show("HOARDVALUE_DESTROY", text, nil, { key = row.key, link = row.link })
+end
+
+local function itemMenu(rowFrame, row)
+	if not MenuUtil then
+		confirmDestroy(row)
+		return
+	end
+	local canDestroy = ns.Destroyable(row.key) > 0
+	MenuUtil.CreateContextMenu(rowFrame, function(_, root)
+		root:CreateTitle(itemText(row))
+		if canDestroy then
+			root:CreateButton("Destroy", function() confirmDestroy(row) end)
+		else
+			local button = root:CreateButton(cantDestroyText(row))
+			if button.SetEnabled then button:SetEnabled(false) end
+		end
+	end)
+end
+
 local function onRowClick(rowFrame, mouseButton)
 	local row = rowFrame.element.row
 	if row.kind == "item" and mouseButton == "LeftButton" then
 		-- Shift-click links it in chat, ctrl-click previews it.
 		if HandleModifiedItemClick then HandleModifiedItemClick(row.link) end
+	elseif row.kind == "item" and mouseButton == "RightButton" then
+		itemMenu(rowFrame, row)
 	elseif row.kind == "char" and row.charKey ~= ns.charKey and mouseButton == "RightButton" and MenuUtil then
 		MenuUtil.CreateContextMenu(rowFrame, function(_, root)
 			root:CreateTitle(ns.ClassColored(row.char) .. " - " .. (row.char.realm or ""))

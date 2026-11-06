@@ -2,10 +2,13 @@
 ArchdudeWhatsNew:Register("HoardValue", {
 	title = "Hoard Value",
 	icon = "Interface\\Icons\\INV_Misc_Coin_01",
-	version = "1.2.2",
+	version = "1.3.0",
 	seen = "HoardValueWhatsNew",
 	saved = { "HoardValueDB" },
 	changes = {
+		{ "1.3.0",
+			"|cffffd100Destroy items from the list:|r right-click an item and choose Destroy. After you confirm, it destroys the copies in your bags, and in your bank or warband bank while one is open. Copies on other characters stay. An item in several stacks asks once per stack, since the game destroys one stack at a time.",
+		},
 		{ "1.2.2",
 			"Search in the item list now matches item names only. Typing \"bag\" finds your bags, not every item kept in your bags.",
 		},
@@ -34,10 +37,6 @@ ArchdudeWhatsNew:Register("HoardValue", {
 		},
 		{ "1.1.2",
 			"Fixed: Hoard Info showed nothing on a material or crafted item when you only owned a different quality of it. Hovering any quality now lists every quality you own, one line per character and quality, with its quality icon.",
-		},
-		{ "1.1.1",
-			"The minimap button now works with minimap button collectors, and drags around the minimap like other addons' buttons. It stays where you put it.",
-			"/hoard minimap hides or shows the minimap button.",
 		},
 	},
 })
