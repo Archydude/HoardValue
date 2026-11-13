@@ -69,11 +69,11 @@ Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW F
 
 ## B. Upload File form
 
-**File:** `dist\HoardValue-1.3.0.zip`
+**File:** `dist\HoardValue-1.3.1.zip`
 
 **Display name**
 ```
-Hoard Value 1.3.0
+Hoard Value 1.3.1
 ```
 
 **Release type:** `Release`
@@ -82,6 +82,9 @@ Hoard Value 1.3.0
 
 **Changelog** (paste only the newest part; 1.0.0 is already on CurseForge)
 ```markdown
+1.3.1
+- Fixed an error when opening the options during combat ("tried to call the protected function 'OpenSettingsPanel()'"). The options now open as soon as the fight ends.
+
 1.3.0
 - **Destroy items from the list:** right-click an item and choose Destroy. After you confirm, it destroys the copies in your bags, and in your bank or warband bank while one is open. Copies on other characters stay. An item in several stacks asks once per stack, since the game destroys one stack at a time.
 

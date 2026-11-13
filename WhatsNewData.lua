@@ -2,10 +2,13 @@
 ArchdudeWhatsNew:Register("HoardValue", {
 	title = "Hoard Value",
 	icon = "Interface\\Icons\\INV_Misc_Coin_01",
-	version = "1.3.0",
+	version = "1.3.1",
 	seen = "HoardValueWhatsNew",
 	saved = { "HoardValueDB" },
 	changes = {
+		{ "1.3.1",
+			"Fixed an error when opening the options during combat (\"tried to call the protected function 'OpenSettingsPanel()'\"). The options now open as soon as the fight ends.",
+		},
 		{ "1.3.0",
 			"|cffffd100Destroy items from the list:|r right-click an item and choose Destroy. After you confirm, it destroys the copies in your bags, and in your bank or warband bank while one is open. Copies on other characters stay. An item in several stacks asks once per stack, since the game destroys one stack at a time.",
 		},
@@ -34,9 +37,6 @@ ArchdudeWhatsNew:Register("HoardValue", {
 		},
 		{ "1.1.3",
 			"Hoard Info and ranks: an item's tooltip now shows only the rank you're hovering. A material slot on a recipe or crafting order still shows every rank you own, rank 1 first.",
-		},
-		{ "1.1.2",
-			"Fixed: Hoard Info showed nothing on a material or crafted item when you only owned a different quality of it. Hovering any quality now lists every quality you own, one line per character and quality, with its quality icon.",
 		},
 	},
 })

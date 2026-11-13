@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.3.1
+- Fixed an error when opening the options during combat ("tried to call the protected function 'OpenSettingsPanel()'"). The options now open as soon as the fight ends.
+
 ## 1.3.0
 - **Destroy items from the list:** right-click an item and choose Destroy. After you confirm, it destroys the copies in your bags, and in your bank or warband bank while one is open. Copies on other characters stay. An item in several stacks asks once per stack, since the game destroys one stack at a time.
 

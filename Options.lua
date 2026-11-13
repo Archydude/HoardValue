@@ -14,9 +14,27 @@ local TSM_SOURCES = {
 local category
 local settings = {} -- key -> the options page's setting object
 
+-- The game doesn't let addons open its settings during combat, so a request then waits for the fight to end.
+local openAfterCombat = false
+
 function ns.OpenOptions()
-	if category then Settings.OpenToCategory(category:GetID()) end
+	if not category then return end
+	if InCombatLockdown() then
+		if not openAfterCombat then
+			openAfterCombat = true
+			print("|cffffd100Hoard Value|r the options open when you leave combat.")
+		end
+		return
+	end
+	Settings.OpenToCategory(category:GetID())
 end
+
+ns.On("PLAYER_REGEN_ENABLED", function()
+	if openAfterCombat then
+		openAfterCombat = false
+		ns.OpenOptions()
+	end
+end)
 
 -- Changes a setting from elsewhere (the window's Realistic checkbox) through the
 -- options page, so the page stays in sync.
