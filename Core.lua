@@ -32,8 +32,9 @@ ns.ADDON_NAME = ADDON_NAME
 
 ns.IS_RETAIL = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 ns.TOC_VERSION = select(4, GetBuildInfo()) -- e.g. 11509 Era, 16001 Forever, 20506 TBC, 50504 MoP
+ns.IS_FOREVER = ns.TOC_VERSION >= 16000 and ns.TOC_VERSION < 20000
 -- Forever looks like Retail; Era, TBC and MoP Classic keep the classic look.
-ns.MODERN_UI = ns.IS_RETAIL or (ns.TOC_VERSION >= 16000 and ns.TOC_VERSION < 20000)
+ns.MODERN_UI = ns.IS_RETAIL or ns.IS_FOREVER
 
 ---------------------------------------------------------------------------
 -- Events and messages

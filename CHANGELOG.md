@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.3.2
+- Fixed on WoW Forever: items in your reagent bag were counted as bank instead of bags, your keyring was counted as bank, and bank tabs after the fifth weren't counted. Open your bank once on each Forever character to clear the old bank count.
+
 ## 1.3.1
 - Fixed an error when opening the options during combat ("tried to call the protected function 'OpenSettingsPanel()'"). The options now open as soon as the fight ends.
 

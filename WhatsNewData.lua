@@ -2,10 +2,13 @@
 ArchdudeWhatsNew:Register("HoardValue", {
 	title = "Hoard Value",
 	icon = "Interface\\Icons\\INV_Misc_Coin_01",
-	version = "1.3.1",
+	version = "1.3.2",
 	seen = "HoardValueWhatsNew",
 	saved = { "HoardValueDB" },
 	changes = {
+		{ "1.3.2",
+			"Fixed on WoW Forever: items in your reagent bag were counted as bank instead of bags, your keyring was counted as bank, and bank tabs after the fifth weren't counted. Open your bank once on each Forever character to clear the old bank count.",
+		},
 		{ "1.3.1",
 			"Fixed an error when opening the options during combat (\"tried to call the protected function 'OpenSettingsPanel()'\"). The options now open as soon as the fight ends.",
 		},
@@ -34,9 +37,6 @@ ArchdudeWhatsNew:Register("HoardValue", {
 		},
 		{ "1.1.4",
 			"Items in the Hoard Value window now show the same Hoard Info lines as every other item tooltip (which characters have it, in their bags or bank, plus the warband bank), followed by the item's price. They show there even with the tooltip option off.",
-		},
-		{ "1.1.3",
-			"Hoard Info and ranks: an item's tooltip now shows only the rank you're hovering. A material slot on a recipe or crafting order still shows every rank you own, rank 1 first.",
 		},
 	},
 })

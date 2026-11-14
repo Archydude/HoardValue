@@ -9,11 +9,13 @@ local format = string.format
 -- Bag and bank numbers
 ---------------------------------------------------------------------------
 
--- Classic clients (MoP, TBC, Forever, Era) can carry Retail's Enum.BagIndex,
--- with warband and bank-tab entries and Retail's numbering, even though their
--- bags work the old way. So only Retail uses the enum; Classic uses the client's
--- own NUM_BAG_SLOTS / NUM_BANKBAGSLOTS, which are always right for that client.
-local BagIndex = ns.IS_RETAIL and Enum.BagIndex or {}
+-- Retail and Forever number bags the modern way: a reagent bag right after your
+-- bags, then bank tabs, and their own bank windows go by Enum.BagIndex. Era, TBC
+-- and MoP Classic can carry Retail's Enum.BagIndex too, with warband and
+-- bank-tab entries and Retail's numbering, even though their bags work the old
+-- way. So they use the client's own NUM_BAG_SLOTS / NUM_BANKBAGSLOTS instead,
+-- which are always right for that client.
+local BagIndex = (ns.IS_RETAIL or ns.IS_FOREVER) and Enum.BagIndex or {}
 local NUM_BAGS = NUM_BAG_SLOTS or 4
 
 local function bagRange(list, prefix, from, to)
@@ -28,8 +30,8 @@ local BAGS = { BagIndex.Backpack or 0 }
 for i = 1, NUM_BAGS do BAGS[#BAGS + 1] = BagIndex["Bag_" .. i] or i end
 if BagIndex.ReagentBag then BAGS[#BAGS + 1] = BagIndex.ReagentBag end
 
--- Retail's bank has tabs since 11.2; Classic banks have the main slots plus
--- bank bags, numbered right after your bags.
+-- Retail's bank has tabs since 11.2, and Forever's too; Classic banks have the
+-- main slots plus bank bags, numbered right after your bags.
 local CHAR_BANK = bagRange({}, "CharacterBankTab_", 1, 10)
 if #CHAR_BANK == 0 then
 	CHAR_BANK[1] = BagIndex.Bank or BANK_CONTAINER or -1

@@ -69,11 +69,11 @@ Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW F
 
 ## B. Upload File form
 
-**File:** `dist\HoardValue-1.3.1.zip`
+**File:** `dist\HoardValue-1.3.2.zip`
 
 **Display name**
 ```
-Hoard Value 1.3.1
+Hoard Value 1.3.2
 ```
 
 **Release type:** `Release`
@@ -82,6 +82,9 @@ Hoard Value 1.3.1
 
 **Changelog** (paste only the newest part; 1.0.0 is already on CurseForge)
 ```markdown
+1.3.2
+- Fixed on WoW Forever: items in your reagent bag were counted as bank instead of bags, your keyring was counted as bank, and bank tabs after the fifth weren't counted. Open your bank once on each Forever character to clear the old bank count.
+
 1.3.1
 - Fixed an error when opening the options during combat ("tried to call the protected function 'OpenSettingsPanel()'"). The options now open as soon as the fight ends.
 
