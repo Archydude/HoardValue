@@ -104,6 +104,8 @@ local function createSettings()
 	checkbox("minimap", "Show minimap button",
 		"Click it to open Hoard Value. Drag it to move it around the minimap."
 			.. (AddonCompartmentFrame and " Hoard Value is also in the addon menu on the minimap." or ""))
+	checkbox("bagValue", "Show bags value in the bag window",
+		"Shows what the items in your bags are worth at the bottom of the game's own bag window, left of your gold. Hover it for this character's total, click it to open Hoard Value. Bag addons that replace the game's bags don't show it.")
 	dropdown("precision", "Show amounts down to", {
 		{ "gold", "Gold (2,904g)" },
 		{ "silver", "Silver (2,903g 83s)" },

@@ -25,6 +25,7 @@ Options.xml
 Options.lua
 Minimap.lua
 Tooltip.lua
+Bags.lua
 UI.lua
 WhatsNew.lua
 WhatsNewData.lua

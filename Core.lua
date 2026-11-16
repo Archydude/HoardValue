@@ -12,6 +12,7 @@
 --   Options.lua  Esc > Options > AddOns > Hoard Value
 --   Minimap.lua  minimap button and addon compartment entry
 --   Tooltip.lua  who has an item, on item tooltips
+--   Bags.lua     what your bags are worth, in the game's own bag window
 --   UI.lua       the report window
 --
 -- The files share the addon's private table `ns`. They talk through messages
@@ -119,6 +120,7 @@ ns.DEFAULTS = {
 	listAll = false,       -- list everything, bound items too, even if not counted
 	precision = "gold",    -- smallest coin shown: "copper" | "silver" | "gold"
 	minimap = true,
+	bagValue = true,       -- what your bags are worth, in the game's bag window
 	tooltipCounts = true,  -- who has an item, on its tooltip
 	tooltipSpacing = "above", -- blank line around those lines: "above" | "below" | "both" | "none"
 	tab = 1,
