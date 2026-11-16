@@ -71,13 +71,13 @@ local function createSettings()
 		Settings.CreateCheckbox(category, setting(key, VarType.Boolean, name), tooltip)
 	end
 
-	local function dropdown(key, name, choices, tooltip)
+	local function dropdown(key, name, choices, tooltip, varType)
 		local function getOptions()
 			local container = Settings.CreateControlTextContainer()
 			for _, choice in ipairs(choices) do container:Add(choice[1], choice[2]) end
 			return container:GetData()
 		end
-		Settings.CreateDropdown(category, setting(key, VarType.String, name), getOptions, tooltip)
+		Settings.CreateDropdown(category, setting(key, varType or VarType.String, name), getOptions, tooltip)
 	end
 
 	header("What counts")
@@ -106,6 +106,15 @@ local function createSettings()
 			.. (AddonCompartmentFrame and " Hoard Value is also in the addon menu on the minimap." or ""))
 	checkbox("bagValue", "Show bags value in the bag window",
 		"Shows what the items in your bags are worth at the bottom of the game's own bag window, left of your gold. Hover it for this character's total, click it to open Hoard Value. Bag addons that replace the game's bags don't show it.")
+	checkbox("lootValue", "Say what picked-up items are worth",
+		"When you loot an item or are handed one, a chat line only you see says what it's worth. Soulbound items are only mentioned with Count soulbound items on.")
+	dropdown("lootValueMin", "Only picked-up items worth at least", {
+		{ 0, "Any value" },
+		{ 1, "1 gold" },
+		{ 10, "10 gold" },
+		{ 100, "100 gold" },
+		{ 1000, "1,000 gold" },
+	}, "Picked-up items worth less than this, for the whole stack, aren't mentioned in chat.", VarType.Number)
 	dropdown("precision", "Show amounts down to", {
 		{ "gold", "Gold (2,904g)" },
 		{ "silver", "Silver (2,903g 83s)" },

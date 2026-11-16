@@ -13,6 +13,7 @@
 --   Minimap.lua  minimap button and addon compartment entry
 --   Tooltip.lua  who has an item, on item tooltips
 --   Bags.lua     what your bags are worth, in the game's own bag window
+--   Loot.lua     what an item is worth, in chat when you pick it up
 --   UI.lua       the report window
 --
 -- The files share the addon's private table `ns`. They talk through messages
@@ -121,6 +122,8 @@ ns.DEFAULTS = {
 	precision = "gold",    -- smallest coin shown: "copper" | "silver" | "gold"
 	minimap = true,
 	bagValue = true,       -- what your bags are worth, in the game's bag window
+	lootValue = true,      -- chat line with an item's value when you pick it up
+	lootValueMin = 0,      -- in gold; picked-up items worth less aren't mentioned
 	tooltipCounts = true,  -- who has an item, on its tooltip
 	tooltipSpacing = "above", -- blank line around those lines: "above" | "below" | "both" | "none"
 	tab = 1,

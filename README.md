@@ -9,6 +9,7 @@ How much your character, and your whole account, is worth in gold: the gold you 
 - **Three tabs:** this character, the whole account (all characters plus the warband bank), and a per-character list.
 - **Hoard Info on every item tooltip:** which of your characters have the item and how many, with a bag icon for their bags and a bank icon for their bank. The warband bank gets its own line, and a total shows when it's in more than one place. For items that come in ranks, an item shows only its own rank, and a material slot on a recipe or crafting order shows every rank you own, rank 1 first.
 - **Bags value in your bag window:** what the items in your bags are worth, at the bottom of the game's own bag window next to your gold. Hover it for this character's total, click it to open Hoard Value. Bag addons that replace the game's bags don't show it.
+- **What you pick up is worth:** when you loot an item or are handed one, a chat line only you see says what it's worth, with the price of each for a stack. You can set a minimum value so only the good finds are mentioned. Soulbound items are only mentioned with Count soulbound items on.
 - **Realistic value:** what you'd actually get selling everything. Each item counts at the lower of its market value and the cheapest auction right now, minus the 5% auction house cut.
 - Gray junk always counts at vendor price, and so do items with no auction price. Anything a vendor pays more for than the auction house counts at the vendor price.
 - **What's New:** after an update, a window shows what changed since the version you had. Type `/whatsnew` to open it any time.
@@ -42,6 +43,8 @@ Click the gear in the window, right-click the minimap button, type `/hoard optio
 | Realistic value | Off by default. Also a checkbox in the window. |
 | Show minimap button | On by default. Drag the button to move it. `/hoard minimap` also hides or shows it. |
 | Show bags value in the bag window | On by default. Shows what the items in your bags are worth at the bottom of the game's own bag window, left of your gold. |
+| Say what picked-up items are worth | On by default. A chat line only you see says what an item is worth when you loot it or are handed it. |
+| Only picked-up items worth at least | Any value (default), 1, 10, 100 or 1,000 gold, for the whole stack. |
 | Show amounts down to | Gold (default), silver or copper. |
 | List items with no value | Off by default. Shows quest items, keys and other things nobody pays for. |
 | List every item | Off by default. Lists everything in your bags and banks, including soulbound and warbound items and items with no value. Totals don't change: bound items show their vendor price but stay out of the total unless Count soulbound items is on. |

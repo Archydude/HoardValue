@@ -125,6 +125,7 @@ local function itemKey(link, bound)
 	end
 	return bound and (s .. "#bound") or s
 end
+ns.ItemKey = itemKey
 
 -- How an item binds (GetItemInfo's 14th value). These never go on the auction
 -- house: Warbound, Battle.net account bound and Warbound until equipped. The
@@ -141,6 +142,15 @@ local ACCOUNT_BIND = {
 function ns.AccountBound(link)
 	local ok, _, _, _, _, _, _, _, _, _, _, _, _, _, bindType = pcall(GetItemInfo, link)
 	if ok and bindType then return ACCOUNT_BIND[bindType] or false end
+end
+
+-- True for an item that is bound the moment you get it: binds when picked up,
+-- quest items, and the account-bound kinds above. nil until the item has loaded.
+local PICKUP_BIND = { [ItemBind.OnAcquire or 1] = true, [ItemBind.Quest or 4] = true }
+
+function ns.BoundWhenLooted(link)
+	local ok, _, _, _, _, _, _, _, _, _, _, _, _, _, bindType = pcall(GetItemInfo, link)
+	if ok and bindType then return PICKUP_BIND[bindType] or ACCOUNT_BIND[bindType] or false end
 end
 
 -- Binding lines on a tooltip that mean this copy can't be sold, even when the
