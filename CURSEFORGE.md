@@ -34,31 +34,36 @@ Hoard Value adds up everything you own and tells you, in gold, what your charact
 ### Your net worth at a glance
 - One big total, split into **gold, bags, bank and warband bank**.
 - **This character**, **Account** and **By character** tabs.
-- Hover the minimap button for your totals without opening anything.
+- Hover the minimap button for your totals.
 
 ### Every item, most valuable first
-Everything you own in one list, sorted by value. Sort by any column, search by item name, hover an item to see who has it and what it's worth, and right-click it to destroy it, with a confirmation first. Turn on **List every item** to add soulbound and warbound items, so you can find anything you own.
+Everything you own in one list. Sort by any column, search by item name, and right-click an item to destroy it, after a confirmation. **List every item** adds soulbound and warbound items too.
 
 ### Who has it? Right on the tooltip
-Hover any item, anywhere in the game, and **Hoard Info** shows which of your characters have it and how many, in their bags, their bank or the warband bank.
+Hover any item and **Hoard Info** shows which of your characters have it and how many, in bags, bank or warband bank.
+
+### Your bags' value in your bag window
+What the items in your bags are worth shows at the bottom of the game's own bag window, next to your gold. Bag addons that replace the game's bags don't show it.
+
+### What you pick up is worth
+Loot an item, or get handed one, and a chat line only you see says what it's worth. Set a minimum value to hear only about the good finds. Soulbound items are only mentioned when you count them.
 
 ### Realistic value
-**Realistic value** shows what you'd actually get: each item at the lower of its market value and the cheapest auction, minus the 5% cut.
+What you'd actually get: each item at the lower of its market value and the cheapest auction, minus the 5% cut.
 
-### Honest about soulbound items
-Soulbound and warbound items can't be sold on the auction house, so they're left out by default. Turn them on to count them at vendor price.
+### Soulbound items
+Soulbound and warbound items can't be auctioned, so they're left out by default. Turn them on to count them at vendor price.
 
 ### Retail and Classic
 Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW Forever** and **Classic Era** (including Season of Discovery and Hardcore).
 
 ### How to use
 1. Click the coin button on the minimap, or type **/hoard**.
-2. Log in and visit a banker once on each character, so Hoard Value can see what they have.
+2. Log in and visit a banker once on each character.
 
 ### Good to know
 - Uses TSM first, then Auctionator. Gray junk and items with no auction price count at vendor price.
 - Not counted yet: mail, your auctions and equipped gear.
-- Options: the gear in the window, or **/hoard options**.
 - After an update, a What's New window shows what changed.
 
 **Feedback and bug reports are welcome** in the comments.
@@ -69,11 +74,11 @@ Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW F
 
 ## B. Upload File form
 
-**File:** `dist\HoardValue-1.3.2.zip`
+**File:** `dist\HoardValue-1.4.0.zip`
 
 **Display name**
 ```
-Hoard Value 1.3.2
+Hoard Value 1.4.0
 ```
 
 **Release type:** `Release`
@@ -82,6 +87,11 @@ Hoard Value 1.3.2
 
 **Changelog** (paste only the newest part; 1.0.0 is already on CurseForge)
 ```markdown
+1.4.0
+- **Bags value in your bag window:** what the items in your bags are worth now shows at the bottom of the game's own bag window, left of your gold. Hover it for this character's total, click it to open Hoard Value. Bag addons that replace the game's bags don't show it.
+- **What you pick up is worth:** when you loot an item or are handed one, a chat line only you see says what it's worth, with the price of each for a stack. A new option sets a minimum value, so only the good finds are mentioned. Soulbound items are only mentioned with Count soulbound items on.
+- Both are on by default and can be turned off in the options.
+
 1.3.2
 - Fixed on WoW Forever: items in your reagent bag were counted as bank instead of bags, your keyring was counted as bank, and bank tabs after the fifth weren't counted. Open your bank once on each Forever character to clear the old bank count.
 

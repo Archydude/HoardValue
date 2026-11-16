@@ -2,10 +2,15 @@
 ArchdudeWhatsNew:Register("HoardValue", {
 	title = "Hoard Value",
 	icon = "Interface\\Icons\\INV_Misc_Coin_01",
-	version = "1.3.2",
+	version = "1.4.0",
 	seen = "HoardValueWhatsNew",
 	saved = { "HoardValueDB" },
 	changes = {
+		{ "1.4.0",
+			"|cffffd100Bags value in your bag window:|r what the items in your bags are worth now shows at the bottom of the game's own bag window, left of your gold. Hover it for this character's total, click it to open Hoard Value. Bag addons that replace the game's bags don't show it.",
+			"|cffffd100What you pick up is worth:|r when you loot an item or are handed one, a chat line only you see says what it's worth, with the price of each for a stack. A new option sets a minimum value, so only the good finds are mentioned. Soulbound items are only mentioned with Count soulbound items on.",
+			"Both are on by default and can be turned off in the options.",
+		},
 		{ "1.3.2",
 			"Fixed on WoW Forever: items in your reagent bag were counted as bank instead of bags, your keyring was counted as bank, and bank tabs after the fifth weren't counted. Open your bank once on each Forever character to clear the old bank count.",
 		},
@@ -34,9 +39,6 @@ ArchdudeWhatsNew:Register("HoardValue", {
 		},
 		{ "1.1.5",
 			"Fixed: on WoW Forever, characters were saved under their first name only, so the window, tooltips and minimap button showed just the first name, and two characters with the same first name shared one entry. They now show by their full name. Characters you already have move over to it the next time you log in on them.",
-		},
-		{ "1.1.4",
-			"Items in the Hoard Value window now show the same Hoard Info lines as every other item tooltip (which characters have it, in their bags or bank, plus the warband bank), followed by the item's price. They show there even with the tooltip option off.",
 		},
 	},
 })
