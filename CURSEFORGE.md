@@ -74,11 +74,11 @@ Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW F
 
 ## B. Upload File form
 
-**File:** `dist\HoardValue-1.4.0.zip`
+**File:** `dist\HoardValue-1.4.1.zip`
 
 **Display name**
 ```
-Hoard Value 1.4.0
+Hoard Value 1.4.1
 ```
 
 **Release type:** `Release`
@@ -87,6 +87,9 @@ Hoard Value 1.4.0
 
 **Changelog** (paste only the newest part; 1.0.0 is already on CurseForge)
 ```markdown
+1.4.1
+- Fixed: after you opened Hoard Value's options, the game's own options could show the error "AddOn 'HoardValue' tried to call the protected function 'IsUserOAuthed()'".
+
 1.4.0
 - **Bags value in your bag window:** what the items in your bags are worth now shows at the bottom of the game's own bag window, left of your gold. Hover it for this character's total, click it to open Hoard Value. Bag addons that replace the game's bags don't show it.
 - **What you pick up is worth:** when you loot an item or are handed one, a chat line only you see says what it's worth, with the price of each for a stack. A new option sets a minimum value, so only the good finds are mentioned. Soulbound items are only mentioned with Count soulbound items on.

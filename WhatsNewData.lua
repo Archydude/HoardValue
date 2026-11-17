@@ -2,10 +2,13 @@
 ArchdudeWhatsNew:Register("HoardValue", {
 	title = "Hoard Value",
 	icon = "Interface\\Icons\\INV_Misc_Coin_01",
-	version = "1.4.0",
+	version = "1.4.1",
 	seen = "HoardValueWhatsNew",
 	saved = { "HoardValueDB" },
 	changes = {
+		{ "1.4.1",
+			"Fixed: after you opened Hoard Value's options, the game's own options could show the error \"AddOn 'HoardValue' tried to call the protected function 'IsUserOAuthed()'\".",
+		},
 		{ "1.4.0",
 			"|cffffd100Bags value in your bag window:|r what the items in your bags are worth now shows at the bottom of the game's own bag window, left of your gold. Hover it for this character's total, click it to open Hoard Value. Bag addons that replace the game's bags don't show it.",
 			"|cffffd100What you pick up is worth:|r when you loot an item or are handed one, a chat line only you see says what it's worth, with the price of each for a stack. A new option sets a minimum value, so only the good finds are mentioned. Soulbound items are only mentioned with Count soulbound items on.",
@@ -36,9 +39,6 @@ ArchdudeWhatsNew:Register("HoardValue", {
 		},
 		{ "1.1.6",
 			"Fixed: a material slot on a recipe or crafting order could leave out a rank you own, showing only rank 1 while rank 2 sat in your bags. This happened when the game hadn't loaded that item's name yet when your bags were scanned. Every rank you own now shows.",
-		},
-		{ "1.1.5",
-			"Fixed: on WoW Forever, characters were saved under their first name only, so the window, tooltips and minimap button showed just the first name, and two characters with the same first name shared one entry. They now show by their full name. Characters you already have move over to it the next time you log in on them.",
 		},
 	},
 })

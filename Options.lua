@@ -67,8 +67,16 @@ local function createSettings()
 		return s
 	end
 
+	-- Like Settings.CreateCheckbox / CreateDropdown, but on our own row templates (see
+	-- Options.xml). On Blizzard's templates, a row that drew one of our settings is later
+	-- reused for Blizzard's own, which then can't call protected functions: its Discord
+	-- dropdown and button get blocked (ADDON_ACTION_FORBIDDEN on IsUserOAuthed).
+	local function control(template, s, options, tooltip)
+		layout:AddInitializer(Settings.CreateControlInitializer(template, s, options, tooltip))
+	end
+
 	local function checkbox(key, name, tooltip)
-		Settings.CreateCheckbox(category, setting(key, VarType.Boolean, name), tooltip)
+		control("HoardValueSettingsCheckboxTemplate", setting(key, VarType.Boolean, name), nil, tooltip)
 	end
 
 	local function dropdown(key, name, choices, tooltip, varType)
@@ -77,7 +85,7 @@ local function createSettings()
 			for _, choice in ipairs(choices) do container:Add(choice[1], choice[2]) end
 			return container:GetData()
 		end
-		Settings.CreateDropdown(category, setting(key, varType or VarType.String, name), getOptions, tooltip)
+		control("HoardValueSettingsDropdownTemplate", setting(key, varType or VarType.String, name), getOptions, tooltip)
 	end
 
 	header("What counts")
@@ -136,11 +144,11 @@ local function createSettings()
 		{ "none", "None" },
 	}, "Where a blank line goes to set the Hoard Info lines apart from the rest of the tooltip.")
 
-	-- Like CreateSettingsButtonInitializer, but on our own row template (see Options.xml) and
-	-- with no search tags. Tags added from addon code are tainted, and the options search box
-	-- reads every page's tags unprotected, so the whole search turns tainted and Blizzard's
-	-- Discord button in the results gets blocked (ADDON_ACTION_FORBIDDEN on IsUserOAuthed).
-	-- Checkboxes and dropdowns are fine: Blizzard adds their tags in its own secure code.
+	-- Like CreateSettingsButtonInitializer, but on our own row template and with no search
+	-- tags. Tags added from addon code are tainted, and the options search box reads every
+	-- page's tags unprotected, so the whole search turns tainted and Blizzard's Discord
+	-- button in the results gets blocked. Checkboxes and dropdowns get their tags in
+	-- Blizzard's own secure code.
 	layout:AddInitializer(Settings.CreateElementInitializer("HoardValueSettingsButtonTemplate", {
 		name = "Window position",
 		buttonText = "Reset",
