@@ -7,6 +7,9 @@ local ADDON_NAME, ns = ...
 
 local AH_CUT = 0.05
 
+-- The lower of market value and the lowest auction, as a TSM price.
+ns.TSM_LOWER = "min(dbmarket, dbminbuyout)"
+
 ---------------------------------------------------------------------------
 -- Price addons
 ---------------------------------------------------------------------------
@@ -59,7 +62,7 @@ function ns.SourceLabel()
 	local db = ns.db
 	local label
 	if ns.TSMAvailable() then
-		label = "TSM (" .. db.tsmSource .. ")"
+		label = "TSM (" .. (db.tsmSource == ns.TSM_LOWER and "lower of dbmarket, dbminbuyout" or db.tsmSource) .. ")"
 	elseif ns.AuctionatorAPI() then
 		label = "Auctionator"
 	elseif db.provider == "tsm" then

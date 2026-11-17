@@ -7,6 +7,7 @@ local _, ns = ...
 local TSM_SOURCES = {
 	{ "dbmarket", "Market value (recommended)" },
 	{ "dbminbuyout", "Lowest auction right now" },
+	{ ns.TSM_LOWER, "Lower of market and lowest" }, -- short: the closed dropdown cuts long names
 	{ "dbhistorical", "Historical price" },
 	{ "dbregionmarketavg", "Region market average" },
 }
@@ -104,7 +105,8 @@ local function createSettings()
 		{ "auctionator", "Auctionator only" },
 	}, "Where prices come from. Automatic uses TSM and falls back to Auctionator for items TSM has no price for. Items with no auction price, and gray junk, count at vendor price.")
 	dropdown("tsmSource", "TSM price", TSM_SOURCES,
-		"Which TSM price to use. Market value smooths out spikes; lowest auction is what's listed right now.")
+		"Which TSM price to use. Market value smooths out spikes; lowest auction is what's listed right now. "
+			.. "The lower of the two is the careful one: an item never counts for more than it's listed for right now.")
 	checkbox("realistic", "Realistic value",
 		"What you'd actually get selling everything: each item at the lower of its market value and the cheapest auction right now, minus the auction house's 5% cut.")
 
