@@ -39,7 +39,7 @@ Click the gear in the window, right-click the minimap button, type `/hoard optio
 | Count soulbound items | Off by default. Soulbound and warbound items can't go on the auction house, so when on they count at what a vendor pays. |
 | Include the warband bank | Retail only. On by default. Adds the warband bank's gold and items to the account total, once. |
 | Price addon | Automatic (TSM, then Auctionator for anything TSM has no price for), TSM only, or Auctionator only. |
-| TSM price | Market value (default), lowest auction right now, historical price or region market average. |
+| TSM price | Market value (default), lowest auction right now, the lower of those two, historical price or region market average. |
 | Realistic value | Off by default. Also a checkbox in the window. |
 | Show minimap button | On by default. Drag the button to move it. `/hoard minimap` also hides or shows it. |
 | Show bags value in the bag window | On by default. Shows what the items in your bags are worth at the bottom of the game's own bag window, left of your gold. |

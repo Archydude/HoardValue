@@ -2,10 +2,13 @@
 ArchdudeWhatsNew:Register("HoardValue", {
 	title = "Hoard Value",
 	icon = "Interface\\Icons\\INV_Misc_Coin_01",
-	version = "1.4.1",
+	version = "1.5.0",
 	seen = "HoardValueWhatsNew",
 	saved = { "HoardValueDB" },
 	changes = {
+		{ "1.5.0",
+			"|cffffd100Lower of market and lowest:|r a new choice under TSM price in the options. Each item counts at TSM's market value or the lowest auction right now, whichever is lower, so nothing counts for more than it's listed for.",
+		},
 		{ "1.4.1",
 			"Fixed: after you opened Hoard Value's options, the game's own options could show the error \"AddOn 'HoardValue' tried to call the protected function 'IsUserOAuthed()'\".",
 		},
@@ -36,9 +39,6 @@ ArchdudeWhatsNew:Register("HoardValue", {
 		},
 		{ "1.1.7",
 			"Gray junk now always counts at what a vendor pays for it, never at its auction house price, so a few overpriced junk listings can't inflate your total.",
-		},
-		{ "1.1.6",
-			"Fixed: a material slot on a recipe or crafting order could leave out a rank you own, showing only rank 1 while rank 2 sat in your bags. This happened when the game hadn't loaded that item's name yet when your bags were scanned. Every rank you own now shows.",
 		},
 	},
 })

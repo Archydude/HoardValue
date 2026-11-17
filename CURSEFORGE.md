@@ -37,13 +37,13 @@ Hoard Value adds up everything you own and tells you, in gold, what your charact
 - Hover the minimap button for your totals.
 
 ### Every item, most valuable first
-Everything you own in one list. Sort by any column, search by item name, and right-click an item to destroy it, after a confirmation. **List every item** adds soulbound and warbound items too.
+Sort by any column, search by item name, and right-click an item to destroy it, after a confirmation. **List every item** adds soulbound and warbound items too.
 
 ### Who has it? Right on the tooltip
 Hover any item and **Hoard Info** shows which of your characters have it and how many, in bags, bank or warband bank.
 
 ### Your bags' value in your bag window
-What the items in your bags are worth shows at the bottom of the game's own bag window, next to your gold. Bag addons that replace the game's bags don't show it.
+What your bags are worth shows at the bottom of the game's own bag window, next to your gold. Bag addons that replace the game's bags don't show it.
 
 ### What you pick up is worth
 Loot an item, or get handed one, and a chat line only you see says what it's worth. Set a minimum value to hear only about the good finds. Soulbound items are only mentioned when you count them.
@@ -63,6 +63,7 @@ Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW F
 
 ### Good to know
 - Uses TSM first, then Auctionator. Gray junk and items with no auction price count at vendor price.
+- With TSM, choose the price: market value, lowest auction, or the lower of the two.
 - Not counted yet: mail, your auctions and equipped gear.
 - After an update, a What's New window shows what changed.
 
@@ -74,11 +75,11 @@ Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW F
 
 ## B. Upload File form
 
-**File:** `dist\HoardValue-1.4.1.zip`
+**File:** `dist\HoardValue-1.5.0.zip`
 
 **Display name**
 ```
-Hoard Value 1.4.1
+Hoard Value 1.5.0
 ```
 
 **Release type:** `Release`
@@ -87,6 +88,9 @@ Hoard Value 1.4.1
 
 **Changelog** (paste only the newest part; 1.0.0 is already on CurseForge)
 ```markdown
+1.5.0
+- **Lower of market and lowest:** a new choice under TSM price in the options. Each item counts at TSM's market value or the lowest auction right now, whichever is lower, so nothing counts for more than it's listed for.
+
 1.4.1
 - Fixed: after you opened Hoard Value's options, the game's own options could show the error "AddOn 'HoardValue' tried to call the protected function 'IsUserOAuthed()'".
 

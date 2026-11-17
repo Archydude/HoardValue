@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.5.0
+- **Lower of market and lowest:** a new choice under TSM price in the options. Each item counts at TSM's market value or the lowest auction right now, whichever is lower, so nothing counts for more than it's listed for.
+
 ## 1.4.1
 - Fixed: after you opened Hoard Value's options, the game's own options could show the error "AddOn 'HoardValue' tried to call the protected function 'IsUserOAuthed()'".
 
