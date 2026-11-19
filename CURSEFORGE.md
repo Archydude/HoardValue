@@ -21,7 +21,7 @@ What your character and account are really worth in gold: bags, bank and warband
 
 **License:** `MIT License`
 
-**Logo / avatar:** `HoardValue\images\logo-under-100kb.png` (the treasure chest; `HoardValue\images\logo-bag-under-100kb.png` is the coin bag alternative)
+**Logo / avatar:** `HoardValue\images\logo-v2.png` (a coin bag spilling gold coins, with a price tag showing a rising chart)
 
 **Description** (paste everything between the lines)
 
