@@ -67,6 +67,8 @@ Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW F
 - Not counted yet: mail, your auctions and equipped gear.
 - After an update, a What's New window shows what changed.
 
+This addon was made with AI.
+
 **Feedback and bug reports are welcome** in the comments.
 ```
 ---

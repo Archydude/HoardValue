@@ -56,3 +56,6 @@ Click the gear in the window, right-click the minimap button, type `/hoard optio
 - Prices are looked up every time you open the window, so totals for other characters follow the market even if you haven't logged in on them.
 - With Auctionator, prices come from your own auction house scans. With TSM, the TSM desktop app keeps them up to date.
 - Not counted yet: mail, items you have listed on the auction house, and equipped gear.
+
+## Made with AI
+This addon was made with AI.
