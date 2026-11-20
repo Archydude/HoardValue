@@ -231,6 +231,16 @@ function ns.PlayerName()
 	return first
 end
 
+-- This realm's name. WoW: Forever sometimes gives an empty realm name for a
+-- whole session; then it's the one saved for this character, if any.
+function ns.RealmName()
+	local realm = GetRealmName()
+	if realm and realm ~= "" then return realm end
+	local c = ns.charKey and ns.db.chars[ns.charKey]
+	realm = c and c.realm
+	return realm ~= "" and realm or nil
+end
+
 function ns.CharData()
 	local chars = ns.db.chars
 	local c = chars[ns.charKey]
@@ -250,7 +260,7 @@ end
 local function scanBags()
 	local c = ns.CharData()
 	c.name = ns.PlayerName()
-	c.realm = GetRealmName()
+	c.realm = ns.RealmName() or c.realm
 	c.class = select(2, UnitClass("player"))
 	c.money = GetMoney()
 	c.bags = scanContainers(BAGS)
@@ -314,14 +324,46 @@ local rescan = ns.Debounce(1, function()
 	ns.Fire("DataChanged")
 end)
 
-ns.On("PLAYER_LOGIN", function()
-	local realm = "-" .. (GetNormalizedRealmName() or GetRealmName():gsub("[%s%-]", ""))
-	ns.charKey = ns.PlayerName() .. realm
-	-- Older versions saved Forever characters under their first name only.
-	local chars, oldKey = ns.db.chars, UnitName("player") .. realm
-	if oldKey ~= ns.charKey and chars[oldKey] and not chars[ns.charKey] then
-		chars[ns.charKey], chars[oldKey] = chars[oldKey], nil
+-- Moves the character saved under `from` over to `to`. The bags are scanned
+-- again right after; the bank is kept from whichever saw it last.
+local function moveChar(chars, from, to)
+	local old, c = chars[from], chars[to]
+	if not old or from == to then return end
+	if not c then
+		chars[to] = old
+	elseif (old.bankScanned or 0) > (c.bankScanned or 0) then
+		c.bank, c.bankScanned = old.bank, old.bankScanned
 	end
+	chars[from] = nil
+end
+
+-- This character's key in the saved data, "Name-Realm". Also moves over what
+-- was saved for it under an older or realmless key.
+local function resolveCharKey()
+	local chars, name = ns.db.chars, ns.PlayerName()
+	local realm = GetNormalizedRealmName()
+	if not realm or realm == "" then realm = (GetRealmName() or ""):gsub("[%s%-]", "") end
+	local key, realmless = name .. "-" .. realm, name .. "-"
+	if realm == "" then
+		-- The game gave no realm name (see ns.RealmName): this is the character
+		-- already saved with this name, when there's just one.
+		local found, count = nil, 0
+		for savedKey, c in pairs(chars) do
+			if savedKey ~= realmless and c.name == name then found, count = savedKey, count + 1 end
+		end
+		if count == 1 then key = found end
+	else
+		-- Older versions saved Forever characters under their first name only.
+		local oldKey = UnitName("player") .. "-" .. realm
+		if not chars[key] then moveChar(chars, oldKey, key) end
+	end
+	-- Saved while the game gave no realm name.
+	moveChar(chars, realmless, key)
+	return key
+end
+
+ns.On("PLAYER_LOGIN", function()
+	ns.charKey = resolveCharKey()
 	scanBags()
 	scanWarbandMoney()
 	ns.Fire("DataChanged")

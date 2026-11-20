@@ -77,11 +77,11 @@ This addon was made with AI.
 
 ## B. Upload File form
 
-**File:** `dist\HoardValue-1.5.0.zip`
+**File:** `dist\HoardValue-1.5.1.zip`
 
 **Display name**
 ```
-Hoard Value 1.5.0
+Hoard Value 1.5.1
 ```
 
 **Release type:** `Release`
@@ -90,6 +90,9 @@ Hoard Value 1.5.0
 
 **Changelog** (paste only the newest part; 1.0.0 is already on CurseForge)
 ```markdown
+1.5.1
+- Fixed on WoW Forever: a character could show twice, once with its realm and once without, so its items and gold were counted twice in Hoard Info and in your account total. This happened when the game didn't give the realm's name at login. The two become one again the next time you log in on that character.
+
 1.5.0
 - **Lower of market and lowest:** a new choice under TSM price in the options. Each item counts at TSM's market value or the lowest auction right now, whichever is lower, so nothing counts for more than it's listed for.
 

@@ -2,10 +2,13 @@
 ArchdudeWhatsNew:Register("HoardValue", {
 	title = "Hoard Value",
 	icon = "Interface\\Icons\\INV_Misc_Coin_01",
-	version = "1.5.0",
+	version = "1.5.1",
 	seen = "HoardValueWhatsNew",
 	saved = { "HoardValueDB" },
 	changes = {
+		{ "1.5.1",
+			"Fixed on WoW Forever: a character could show twice, once with its realm and once without, so its items and gold were counted twice in Hoard Info and in your account total. This happened when the game didn't give the realm's name at login. The two become one again the next time you log in on that character.",
+		},
 		{ "1.5.0",
 			"|cffffd100Lower of market and lowest:|r a new choice under TSM price in the options. Each item counts at TSM's market value or the lowest auction right now, whichever is lower, so nothing counts for more than it's listed for.",
 		},
@@ -36,9 +39,6 @@ ArchdudeWhatsNew:Register("HoardValue", {
 			"|cffffd100List every item:|r a new option lists everything in your bags and banks, including soulbound and warbound items and items with no value, so you can search all of it. Bound items show their vendor price, and your totals don't change unless Count soulbound items is on.",
 			"Search now finds an item by character name even when it's spread across many places. Before, an item on three or more characters could be missed.",
 			"After an update, a What's New window shows what changed since the version you had.",
-		},
-		{ "1.1.7",
-			"Gray junk now always counts at what a vendor pays for it, never at its auction house price, so a few overpriced junk listings can't inflate your total.",
 		},
 	},
 })

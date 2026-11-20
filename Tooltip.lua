@@ -93,7 +93,8 @@ local number = BreakUpLargeNumbers
 -- "Name", with the realm added for characters on another realm.
 local function charName(c, key)
 	local name = ns.ClassColored(c.name and c or { name = key })
-	if c.realm and c.realm ~= GetRealmName() then
+	local here = ns.RealmName()
+	if here and c.realm and c.realm ~= "" and c.realm ~= here then
 		name = name .. " |cff888888(" .. c.realm .. ")|r"
 	end
 	return name

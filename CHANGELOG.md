@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.5.1
+- Fixed on WoW Forever: a character could show twice, once with its realm and once without, so its items and gold were counted twice in Hoard Info and in your account total. This happened when the game didn't give the realm's name at login. The two become one again the next time you log in on that character.
+
 ## 1.5.0
 - **Lower of market and lowest:** a new choice under TSM price in the options. Each item counts at TSM's market value or the lowest auction right now, whichever is lower, so nothing counts for more than it's listed for.
 
