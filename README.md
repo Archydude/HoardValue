@@ -1,6 +1,6 @@
 # Hoard Value
 
-How much your character, and your whole account, is worth in gold: the gold you carry plus everything in your bags, bank and warband bank, priced with TradeSkillMaster or Auctionator.
+How much your character, and your whole account, is worth in gold: the gold you carry plus everything in your bags, bank and warband bank, priced with TradeSkillMaster, Auctionator or Craftonomics.
 
 - **Total at a glance**, split into gold, bags, bank and warband bank.
 - **Every item, most valuable first.** Click a column to sort by name, quantity, price, value or where it is. Search by item name.
@@ -14,7 +14,7 @@ How much your character, and your whole account, is worth in gold: the gold you 
 - Gray junk always counts at vendor price, and so do items with no auction price. Anything a vendor pays more for than the auction house counts at the vendor price.
 - **What's New:** after an update, a window shows what changed since the version you had. Type `/whatsnew` to open it any time.
 
-Requires **TradeSkillMaster** or **Auctionator** for auction prices. Without either, only vendor prices are used.
+Requires **TradeSkillMaster**, **Auctionator** or **Craftonomics** (Retail and WoW Forever) for auction prices. Without any of them, only vendor prices are used.
 
 Works on **Retail** (Midnight 12.1), **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW Forever** and **Classic Era** (including Season of Discovery and Hardcore). Classic has no warband bank, so everything about it is simply left out there.
 
@@ -38,7 +38,7 @@ Click the gear in the window, right-click the minimap button, type `/hoard optio
 |---|---|
 | Count soulbound items | Off by default. Soulbound and warbound items can't go on the auction house, so when on they count at what a vendor pays. |
 | Include the warband bank | Retail only. On by default. Adds the warband bank's gold and items to the account total, once. |
-| Price addon | Automatic (TSM, then Auctionator for anything TSM has no price for), TSM only, or Auctionator only. |
+| Price addon | Automatic (TSM, then Auctionator for anything TSM has no price for, then Craftonomics for anything neither has a price for), TSM only, Auctionator only, or Craftonomics only. |
 | TSM price | Market value (default), lowest auction right now, the lower of those two, historical price or region market average. |
 | Realistic value | Off by default. Also a checkbox in the window. |
 | Show minimap button | On by default. Drag the button to move it. `/hoard minimap` also hides or shows it. |
@@ -54,7 +54,7 @@ Click the gear in the window, right-click the minimap button, type `/hoard optio
 
 ## Notes
 - Prices are looked up every time you open the window, so totals for other characters follow the market even if you haven't logged in on them.
-- With Auctionator, prices come from your own auction house scans. With TSM, the TSM desktop app keeps them up to date.
+- With Auctionator, prices come from your own auction house scans. With TSM, the TSM desktop app keeps them up to date. With Craftonomics, prices come from wherever its own Price addon option says, including its own auction house scans.
 - Not counted yet: mail, items you have listed on the auction house, and equipped gear.
 
 ## Made with AI

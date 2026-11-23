@@ -13,7 +13,7 @@ Hoard Value
 
 **Summary**
 ```
-What your character and account are really worth in gold: bags, bank and warband bank, priced with TSM or Auctionator.
+What your character and account are really worth in gold: bags, bank and warband bank, priced with TSM, Auctionator or Craftonomics.
 ```
 
 **Main category:** `Auction & Economy`
@@ -29,7 +29,7 @@ What your character and account are really worth in gold: bags, bank and warband
 ```markdown
 ## What is your hoard really worth?
 
-Hoard Value adds up everything you own and tells you, in gold, what your character and your whole account are worth: your gold plus every item in your bags, bank and warband bank, priced with **TradeSkillMaster** or **Auctionator**.
+Hoard Value adds up everything you own and tells you, in gold, what your character and your whole account are worth: your gold plus every item in your bags, bank and warband bank, priced with **TradeSkillMaster**, **Auctionator** or **Craftonomics**.
 
 ### Your net worth at a glance
 - One big total, split into **gold, bags, bank and warband bank**.
@@ -37,22 +37,19 @@ Hoard Value adds up everything you own and tells you, in gold, what your charact
 - Hover the minimap button for your totals.
 
 ### Every item, most valuable first
-Sort by any column, search by item name, and right-click an item to destroy it, after a confirmation. **List every item** adds soulbound and warbound items too.
+Sort by any column, search by name, or right-click an item to destroy it. **List every item** adds bound items too.
 
 ### Who has it? Right on the tooltip
 Hover any item and **Hoard Info** shows which of your characters have it and how many, in bags, bank or warband bank.
 
 ### Your bags' value in your bag window
-What your bags are worth shows at the bottom of the game's own bag window, next to your gold. Bag addons that replace the game's bags don't show it.
+What your bags are worth, next to your gold in the game's own bag window (not in bag addons that replace it).
 
 ### What you pick up is worth
-Loot an item, or get handed one, and a chat line only you see says what it's worth. Set a minimum value to hear only about the good finds. Soulbound items are only mentioned when you count them.
+Loot an item, or get handed one, and a chat line only you see says what it's worth. Set a minimum value to hear only about the good finds.
 
 ### Realistic value
 What you'd actually get: each item at the lower of its market value and the cheapest auction, minus the 5% cut.
-
-### Soulbound items
-Soulbound and warbound items can't be auctioned, so they're left out by default. Turn them on to count them at vendor price.
 
 ### Retail and Classic
 Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW Forever** and **Classic Era** (including Season of Discovery and Hardcore).
@@ -62,8 +59,9 @@ Works on **Retail**, **Mists of Pandaria Classic**, **TBC Anniversary**, **WoW F
 2. Log in and visit a banker once on each character.
 
 ### Good to know
-- Uses TSM first, then Auctionator. Gray junk and items with no auction price count at vendor price.
+- Uses TSM first, then Auctionator, then Craftonomics. Gray junk and items with no auction price count at vendor price.
 - With TSM, choose the price: market value, lowest auction, or the lower of the two.
+- Soulbound items can't be auctioned: left out by default, or counted at vendor price.
 - Not counted yet: mail, your auctions and equipped gear.
 - After an update, a What's New window shows what changed.
 
@@ -77,11 +75,11 @@ This addon was made with AI.
 
 ## B. Upload File form
 
-**File:** `dist\HoardValue-1.5.1.zip`
+**File:** `dist\HoardValue-1.6.0.zip`
 
 **Display name**
 ```
-Hoard Value 1.5.1
+Hoard Value 1.6.0
 ```
 
 **Release type:** `Release`
@@ -90,6 +88,9 @@ Hoard Value 1.5.1
 
 **Changelog** (paste only the newest part; 1.0.0 is already on CurseForge)
 ```markdown
+1.6.0
+- **Craftonomics prices:** Hoard Value can now price your items with Craftonomics (Retail and WoW Forever), including Craftonomics' own auction house scans, so a character without TSM or Auctionator still gets auction prices. Pick **Craftonomics only** under Price addon in the options. **Automatic** now uses TSM, then Auctionator, then Craftonomics for items neither of the others has a price for. Needs Craftonomics 5.14.0 or later.
+
 1.5.1
 - Fixed on WoW Forever: a character could show twice, once with its realm and once without, so its items and gold were counted twice in Hoard Info and in your account total. This happened when the game didn't give the realm's name at login. The two become one again the next time you log in on that character.
 
@@ -166,6 +167,7 @@ Hoard Value 1.5.1
 - Works on Retail, Mists of Pandaria Classic, TBC Anniversary, WoW Forever and Classic Era, including Season of Discovery (no warband bank on Classic).
 ```
 
-**Related projects:** add both as **Optional Dependency**:
+**Related projects:** add all three as **Optional Dependency**:
 - `TradeSkillMaster`
 - `Auctionator`
+- `Craftonomics`

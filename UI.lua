@@ -338,7 +338,7 @@ local function rebuild()
 		-- A price addon with no data for this realm and faction prices everything
 		-- at vendor value, which also makes Realistic value change nothing.
 		noAuctionPrices = report.countedRows > 0 and report.ahPriced == 0
-			and (ns.TSMAvailable() or ns.AuctionatorAPI() ~= nil),
+			and ns.HasAuctionPrices(),
 	}
 	dirty = false
 end

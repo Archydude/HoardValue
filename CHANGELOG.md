@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.6.0
+- **Craftonomics prices:** Hoard Value can now price your items with Craftonomics (Retail and WoW Forever), including Craftonomics' own auction house scans, so a character without TSM or Auctionator still gets auction prices. Pick **Craftonomics only** under Price addon in the options. **Automatic** now uses TSM, then Auctionator, then Craftonomics for items neither of the others has a price for. Needs Craftonomics 5.14.0 or later.
+
 ## 1.5.1
 - Fixed on WoW Forever: a character could show twice, once with its realm and once without, so its items and gold were counted twice in Hoard Info and in your account total. This happened when the game didn't give the realm's name at login. The two become one again the next time you log in on that character.
 

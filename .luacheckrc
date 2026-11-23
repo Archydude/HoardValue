@@ -29,7 +29,7 @@ read_globals = {
 	"geterrorhandler", "issecretvalue", "securecallfunction",
 
 	-- Game API
-	"Auctionator", "LibStub", "TSM_API",
+	"Auctionator", "CraftonomicsAPI", "LibStub", "TSM_API",
 	"C_Bank", "C_Container", "C_Item", "C_Timer", "C_TooltipInfo", "C_TradeSkillUI", "TooltipDataProcessor",
 	"Enum", "ItemLocation",
 	"GetBuildInfo", "GetItemInfo", "GetItemInfoInstant",

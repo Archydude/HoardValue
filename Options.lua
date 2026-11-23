@@ -100,10 +100,11 @@ local function createSettings()
 
 	header("Prices")
 	dropdown("provider", "Price addon", {
-		{ "auto", "Automatic (TSM, then Auctionator)" },
+		{ "auto", "Automatic (TSM first)" },
 		{ "tsm", "TradeSkillMaster only" },
 		{ "auctionator", "Auctionator only" },
-	}, "Where prices come from. Automatic uses TSM and falls back to Auctionator for items TSM has no price for. Items with no auction price, and gray junk, count at vendor price.")
+		{ "craftonomics", "Craftonomics only" },
+	}, "Where prices come from. Automatic uses TSM, then Auctionator for items TSM has no price for, then Craftonomics for items neither has a price for. Craftonomics' prices follow its own Price addon option, so they can come from its own auction house scans. Items with no auction price, and gray junk, count at vendor price.")
 	dropdown("tsmSource", "TSM price", TSM_SOURCES,
 		"Which TSM price to use. Market value smooths out spikes; lowest auction is what's listed right now. "
 			.. "The lower of the two is the careful one: an item never counts for more than it's listed for right now.")

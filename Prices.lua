@@ -1,5 +1,6 @@
 -- Hoard Value: prices
--- What one of an item is worth: its auction price from TSM or Auctionator, or
+-- What one of an item is worth: its auction price from TSM, Auctionator or
+-- Craftonomics, or
 -- what a vendor pays, whichever is better. Bound and grey items only count at
 -- vendor price.
 
@@ -14,13 +15,31 @@ ns.TSM_LOWER = "min(dbmarket, dbminbuyout)"
 -- Price addons
 ---------------------------------------------------------------------------
 
+-- Whether the Price addon option lets this addon's prices in.
+local function wants(provider)
+	return ns.db.provider == "auto" or ns.db.provider == provider
+end
+
 function ns.TSMAvailable()
-	return ns.db.provider ~= "auctionator" and TSM_API ~= nil and TSM_API.GetCustomPriceValue ~= nil
+	return wants("tsm") and TSM_API ~= nil and TSM_API.GetCustomPriceValue ~= nil
 end
 
 function ns.AuctionatorAPI()
-	if ns.db.provider == "tsm" then return nil end
+	if not wants("auctionator") then return nil end
 	return Auctionator and Auctionator.API and Auctionator.API.v1
+end
+
+-- Craftonomics prices items the way its own options say: from TSM, TSM prices
+-- saved for alts, Auctionator or its own scan of the auction house.
+function ns.CraftonomicsAPI()
+	if not wants("craftonomics") then return nil end
+	local api = CraftonomicsAPI
+	return type(api) == "table" and type(api.GetAuctionPrice) == "function" and api or nil
+end
+
+-- Whether any price addon gives auction prices.
+function ns.HasAuctionPrices()
+	return ns.TSMAvailable() or ns.AuctionatorAPI() ~= nil or ns.CraftonomicsAPI() ~= nil
 end
 
 local function tsmValue(source, itemString)
@@ -54,7 +73,13 @@ local function auctionPrice(link)
 		local value = auctionatorValue(api.GetAuctionPriceByItemLink, link)
 		if value then return value end
 		local id = ns.ItemID(link)
-		return id and auctionatorValue(api.GetAuctionPriceByItemID, id)
+		value = id and auctionatorValue(api.GetAuctionPriceByItemID, id)
+		if value then return value end
+	end
+	local craftonomics = ns.CraftonomicsAPI()
+	if craftonomics then
+		local ok, value = pcall(craftonomics.GetAuctionPrice, link)
+		if ok and type(value) == "number" and value > 0 then return value end
 	end
 end
 
@@ -65,10 +90,14 @@ function ns.SourceLabel()
 		label = "TSM (" .. (db.tsmSource == ns.TSM_LOWER and "lower of dbmarket, dbminbuyout" or db.tsmSource) .. ")"
 	elseif ns.AuctionatorAPI() then
 		label = "Auctionator"
+	elseif ns.CraftonomicsAPI() then
+		label = "Craftonomics"
 	elseif db.provider == "tsm" then
 		return "|cffff6666TSM is not loaded|r"
 	elseif db.provider == "auctionator" then
 		return "|cffff6666Auctionator is not loaded|r"
+	elseif db.provider == "craftonomics" then
+		return "|cffff6666Craftonomics is not loaded|r"
 	else
 		return "|cffff6666vendor only - install TSM or Auctionator|r"
 	end
