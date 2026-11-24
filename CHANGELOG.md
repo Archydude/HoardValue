@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.1
+- Fixed: legacy warbound items no longer interfere with unbound auction prices for the same item.
+- Fixed: looting right after login no longer errors before settings finish loading, Classic item tooltips display reliably, and small labels in the window are larger and easier to read.
+
 ## 1.6.0
 - **Craftonomics prices:** Hoard Value can now price your items with Craftonomics (Retail and WoW Forever), including Craftonomics' own auction house scans, so a character without TSM or Auctionator still gets auction prices. Pick **Craftonomics only** under Price addon in the options. **Automatic** now uses TSM, then Auctionator, then Craftonomics for items neither of the others has a price for. Needs Craftonomics 5.14.0 or later.
 

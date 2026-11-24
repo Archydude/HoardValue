@@ -2,10 +2,14 @@
 ArchdudeWhatsNew:Register("HoardValue", {
 	title = "Hoard Value",
 	icon = "Interface\\Icons\\INV_Misc_Coin_01",
-	version = "1.6.0",
+	version = "1.6.1",
 	seen = "HoardValueWhatsNew",
 	saved = { "HoardValueDB" },
 	changes = {
+		{ "1.6.1",
+			"Fixed: legacy warbound items no longer interfere with unbound auction prices for the same item.",
+			"Fixed: looting right after login no longer errors before settings finish loading, Classic item tooltips display reliably, and small labels in the window are larger and easier to read.",
+		},
 		{ "1.6.0",
 			"|cffffd100Craftonomics prices:|r Hoard Value can now price your items with Craftonomics (Retail and WoW Forever), including Craftonomics' own auction house scans, so a character without TSM or Auctionator still gets auction prices. Pick |cffffd100Craftonomics only|r under Price addon in the options. |cffffd100Automatic|r now uses TSM, then Auctionator, then Craftonomics for items neither of the others has a price for. Needs Craftonomics 5.14.0 or later.",
 		},
@@ -34,9 +38,6 @@ ArchdudeWhatsNew:Register("HoardValue", {
 		},
 		{ "1.2.2",
 			"Search in the item list now matches item names only. Typing \"bag\" finds your bags, not every item kept in your bags.",
-		},
-		{ "1.2.1",
-			"Fixed: typing in the search box of the game's options (Esc > Options) could show the error \"AddOn 'HoardValue' tried to call the protected function 'IsUserOAuthed()'\". The window position's Reset button no longer comes up in that search; it's still on Hoard Value's options page.",
 		},
 	},
 })
