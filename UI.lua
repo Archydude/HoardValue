@@ -473,7 +473,9 @@ local function refresh()
 	updateList()
 end
 
-local queueRefresh = ns.Debounce(0.1, refresh)
+local queueRefresh = ns.Debounce(0.1, function()
+	if dirty then refresh() end
+end)
 
 local function markDirty()
 	dirty = true
@@ -545,6 +547,8 @@ local function createHeaderArea()
 	searchBox:SetSize(190, 20)
 	searchBox:SetPoint("TOPRIGHT", -16, -64)
 	searchBox:SetAutoFocus(false)
+	searchBox:SetFontObject("GameFontHighlight")
+	if searchBox.Instructions then searchBox.Instructions:SetFontObject("GameFontDisable") end
 	searchBox:HookScript("OnTextChanged", function(self)
 		search = strtrim(self:GetText() or ""):lower()
 		refresh()
@@ -576,7 +580,7 @@ local function createList()
 	frame.headers = {}
 	for i = 1, #ITEM_COLUMNS do
 		local header = CreateFrame("Button", nil, inset)
-		header.text = header:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+		header.text = header:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 		header.arrow = header:CreateTexture(nil, "OVERLAY")
 		header.arrow:SetAtlas("auctionhouse-ui-sortarrow", true)
 		header:SetHighlightTexture("Interface\\Buttons\\UI-Common-MouseHilight", "ADD")
@@ -596,9 +600,9 @@ local function createList()
 end
 
 local function createFooter()
-	frame.footerRight = frame:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
+	frame.footerRight = frame:CreateFontString(nil, "OVERLAY", "GameFontDisable")
 	frame.footerRight:SetPoint("BOTTOMRIGHT", -16, 9)
-	frame.footerLeft = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+	frame.footerLeft = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 	frame.footerLeft:SetPoint("BOTTOMLEFT", 16, 9)
 	frame.footerLeft:SetPoint("RIGHT", frame.footerRight, "LEFT", -12, 0)
 	frame.footerLeft:SetJustifyH("LEFT")

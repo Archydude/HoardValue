@@ -225,8 +225,7 @@ local function onItem(tooltip, id)
 	watch(tooltip)
 	if done[tooltip] == id then return end
 	done[tooltip] = id
-	addLines(tooltip, id, isMaterialSlot(tooltip))
-	return true
+	return addLines(tooltip, id, isMaterialSlot(tooltip))
 end
 
 if TooltipDataProcessor and TooltipDataProcessor.AddTooltipPostCall and Enum.TooltipDataType then

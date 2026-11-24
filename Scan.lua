@@ -380,6 +380,7 @@ ns.On("PLAYER_MONEY", function()
 end)
 
 ns.On("ACCOUNT_MONEY", function()
+	if not ns.db then return end
 	scanWarbandMoney()
 	ns.Fire("DataChanged")
 end)

@@ -99,7 +99,7 @@ function ns.SourceLabel()
 	elseif db.provider == "craftonomics" then
 		return "|cffff6666Craftonomics is not loaded|r"
 	else
-		return "|cffff6666vendor only - install TSM or Auctionator|r"
+		return "|cffff6666vendor only - install TSM, Auctionator or Craftonomics|r"
 	end
 	return label .. (db.realistic and ", realistic" or "")
 end
@@ -120,7 +120,8 @@ end
 -- Price of one item and where it comes from ("ah" | "vendor"), or nil when
 -- it's worth nothing. Takes the better of the auction and vendor price.
 function ns.UnitPrice(item)
-	local cached = cache[item.key]
+	local cacheKey = (item.bound and not item.key:find("#bound", 1, true)) and (item.key .. "#bound") or item.key
+	local cached = cache[cacheKey]
 	if cached then return cached.price, cached.how end
 
 	local vendor = item.vendor
@@ -144,7 +145,7 @@ function ns.UnitPrice(item)
 			price, how = vendor, "vendor"
 		end
 	end
-	cache[item.key] = { price = price, how = how }
+	cache[cacheKey] = { price = price, how = how }
 	return price, how
 end
 

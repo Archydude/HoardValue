@@ -60,7 +60,7 @@ local function announce(link, count, triesLeft)
 end
 
 ns.On("CHAT_MSG_LOOT", function(_, text)
-	if not ns.db.lootValue then return end
+	if not (ns.db and ns.db.lootValue) then return end
 	-- The game hides some chat from addons in fights.
 	if type(text) ~= "string" or (issecretvalue and issecretvalue(text)) then return end
 	if not isOwnLoot(text) then return end

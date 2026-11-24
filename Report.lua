@@ -28,24 +28,28 @@ end
 -- listed with their price but no value when "List every item" is on.
 local function addItems(r, items, where, section)
 	for _, item in ipairs(items or {}) do
-		-- Saved before warbound items counted as bound (1.0.1 and older); the
-		-- next scan of that bag saves it properly.
-		if not item.bound and ns.AccountBound(item.link) then item.bound = true end
-		local uncounted = item.bound and not ns.db.countBound
+		-- Saved before warbound items counted as bound (1.0.1 and older): treat as bound in
+		-- memory without mutating the saved record or colliding with unbound cache keys.
+		local bound = item.bound or ns.AccountBound(item.link) or false
+		local key = (bound and not item.bound and not item.key:find("#bound", 1, true))
+			and (item.key .. "#bound") or item.key
+		local uncounted = bound and not ns.db.countBound
 		if uncounted then r.boundSkipped = r.boundSkipped + item.count end
 		if ns.db.listAll or not uncounted then
-			local unit, how = ns.UnitPrice(item)
+			local priced = (bound == item.bound and key == item.key) and item
+				or { key = key, link = item.link, bound = bound, vendor = item.vendor }
+			local unit, how = ns.UnitPrice(priced)
 			local value = unit and not uncounted and unit * item.count or 0
 			r.sections[section] = r.sections[section] + value
 
-			local row = r.byKey[item.key]
+			local row = r.byKey[key]
 			if not row then
 				row = {
-					kind = "item", key = item.key, link = item.link, icon = item.icon, bound = item.bound,
+					kind = "item", key = key, link = item.link, icon = item.icon, bound = bound,
 					name = ns.ItemName(item.link) or "", unit = unit, how = how, -- "": still loading
 					uncounted = uncounted, count = 0, value = 0, places = {}, placeIndex = {},
 				}
-				r.byKey[item.key] = row
+				r.byKey[key] = row
 				r.rows[#r.rows + 1] = row
 				if not uncounted then
 					r.countedRows = r.countedRows + 1
