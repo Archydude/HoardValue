@@ -8,32 +8,46 @@ local format = string.format
 local RETRIES = 3       -- times to wait for an item that hasn't loaded yet
 local RETRY_DELAY = 0.5 -- seconds between them
 
--- The game's own lines for items you get, e.g. "You receive loot: %s.". The
--- stack versions ("%sx%d.") match these too.
+-- The game's own lines for items you get, e.g. "You receive loot: %s." and "%sx%d.".
 local SELF_LINES = {}
-for _, name in ipairs({ "LOOT_ITEM_SELF", "LOOT_ITEM_PUSHED_SELF", "LOOT_ITEM_BONUS_ROLL_SELF" }) do
-	local text = _G[name]
-	if type(text) == "string" then
-		-- Escape the pattern characters, then let the item (%s or %1$s) be anything.
-		local pattern = text:gsub("[%(%)%.%+%-%*%?%[%]%^%$]", "%%%0")
-			:gsub("%%%d*%%?%$?s", "(.+)")
-		SELF_LINES[#SELF_LINES + 1] = "^" .. pattern .. "$"
+local function addLootPatterns(names, multiple)
+	for _, name in ipairs(names) do
+		local text = _G[name]
+		if type(text) == "string" then
+			local countFirst = false
+			if multiple then
+				local itemPos = text:find("%%%d*%%?%$?s") or math.huge
+				local countPos = text:find("%%%d*%%?%$?d") or math.huge
+				countFirst = countPos < itemPos
+			end
+			-- Escape the pattern characters, then turn %s/%1$s and %d/%2$d into captures.
+			local pattern = text:gsub("[%(%)%.%+%-%*%?%[%]%^%$]", "%%%0")
+				:gsub("%%%d*%%?%$?s", "(.+)")
+			if multiple then
+				pattern = pattern:gsub("%%%d*%%?%$?d", "(%%d+)")
+			end
+			SELF_LINES[#SELF_LINES + 1] = { pattern = "^" .. pattern .. "$", multiple = multiple, countFirst = countFirst }
+		end
 	end
 end
-
-local function isOwnLoot(text)
-	for _, pattern in ipairs(SELF_LINES) do
-		if text:find(pattern) then return true end
-	end
-	return false
-end
+addLootPatterns({ "LOOT_ITEM_SELF_MULTIPLE", "LOOT_ITEM_PUSHED_SELF_MULTIPLE", "LOOT_ITEM_BONUS_ROLL_SELF_MULTIPLE" }, true)
+addLootPatterns({ "LOOT_ITEM_SELF", "LOOT_ITEM_PUSHED_SELF", "LOOT_ITEM_BONUS_ROLL_SELF" }, false)
 
 -- The item link in a loot line and how many: "...|h[Name]|h|rx3."
 local function parse(text)
-	local from, to = text:find("|c[^|]+|H.-|h.-|h|r")
-	if not from then return end
-	local link = text:sub(from, to)
-	return link, tonumber(text:match("^x(%d+)", to + 1)) or 1
+	for _, entry in ipairs(SELF_LINES) do
+		local first, second = text:match(entry.pattern)
+		if first then
+			local itemText = entry.multiple and entry.countFirst and second or first
+			local count = entry.multiple and tonumber(entry.countFirst and first or second) or nil
+			local from, to = itemText:find("|c[^|]+|H.-|h.-|h|r")
+			if from then
+				local link = itemText:sub(from, to)
+				if not count then count = tonumber(itemText:match("^x(%d+)", to + 1)) or 1 end
+				return link, count
+			end
+		end
+	end
 end
 
 local function announce(link, count, triesLeft)
@@ -63,7 +77,6 @@ ns.On("CHAT_MSG_LOOT", function(_, text)
 	if not (ns.db and ns.db.lootValue) then return end
 	-- The game hides some chat from addons in fights.
 	if type(text) ~= "string" or (issecretvalue and issecretvalue(text)) then return end
-	if not isOwnLoot(text) then return end
 	local link, count = parse(text)
 	if link then announce(link, count, RETRIES) end
 end)

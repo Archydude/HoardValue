@@ -2,10 +2,15 @@
 ArchdudeWhatsNew:Register("HoardValue", {
 	title = "Hoard Value",
 	icon = "Interface\\Icons\\INV_Misc_Coin_01",
-	version = "1.6.1",
+	version = "1.6.2",
 	seen = "HoardValueWhatsNew",
 	saved = { "HoardValueDB" },
 	changes = {
+		{ "1.6.2",
+			"Fixed: loot announcements now recognize multi-item stacks in non-English game clients and treat Warbound until equipped drops as bound.",
+			"Fixed: destroying an item stack from the window won't run during combat or while you're holding something on your cursor, and targets the exact bag slot you clicked.",
+			"Fixed: the price-source label shows clear names like \"TSM (lowest auction)\" instead of raw TSM codes, right-clicking a character to forget it works on Classic flavors too, and opening the window no longer rebuilds the list twice.",
+		},
 		{ "1.6.1",
 			"Fixed: legacy warbound items no longer interfere with unbound auction prices for the same item.",
 			"Fixed: looting right after login no longer errors before settings finish loading, Classic item tooltips display reliably, and small labels in the window are larger and easier to read.",
@@ -35,9 +40,6 @@ ArchdudeWhatsNew:Register("HoardValue", {
 		},
 		{ "1.3.0",
 			"|cffffd100Destroy items from the list:|r right-click an item and choose Destroy. After you confirm, it destroys the copies in your bags, and in your bank or warband bank while one is open. Copies on other characters stay. An item in several stacks asks once per stack, since the game destroys one stack at a time.",
-		},
-		{ "1.2.2",
-			"Search in the item list now matches item names only. Typing \"bag\" finds your bags, not every item kept in your bags.",
 		},
 	},
 })

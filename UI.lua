@@ -196,6 +196,16 @@ end
 
 local askNextStack
 
+StaticPopupDialogs.HOARDVALUE_FORGET_CHAR = {
+	text = "Forget %s?",
+	button1 = "Forget",
+	button2 = CANCEL,
+	OnAccept = function(_, key) ns.ForgetCharacter(key) end,
+	timeout = 0,
+	whileDead = true,
+	hideOnEscape = true,
+}
+
 StaticPopupDialogs.HOARDVALUE_DESTROY = {
 	text = "%s",
 	button1 = "Destroy",
@@ -205,7 +215,11 @@ StaticPopupDialogs.HOARDVALUE_DESTROY = {
 	whileDead = true,
 	hideOnEscape = true,
 	OnAccept = function(_, data)
-		local destroyed = ns.DestroyItemStack(data.key)
+		if InCombatLockdown() then
+			chat("can't destroy items during combat.")
+			return
+		end
+		local destroyed = ns.DestroyItemStack(data.key, data.hint)
 		if destroyed == 0 then
 			chat("couldn't destroy " .. data.link .. ".")
 			return
@@ -217,8 +231,9 @@ StaticPopupDialogs.HOARDVALUE_DESTROY = {
 
 -- After a stack is destroyed: ask about the next one, if there's more.
 function askNextStack(data)
-	local count, stacks = ns.Destroyable(data.key)
+	local count, stacks, hint = ns.Destroyable(data.key)
 	if count == 0 then return end
+	data.hint = hint
 	local text = format("Destroy the next stack of %s?\n\n%s left in %s.\n\nThis can't be undone.",
 		data.link, BreakUpLargeNumbers(count), stacksText(stacks))
 	StaticPopup_Show("HOARDVALUE_DESTROY", text, nil, data)
@@ -230,7 +245,11 @@ local function cantDestroyText(row)
 end
 
 local function confirmDestroy(row)
-	local count, stacks = ns.Destroyable(row.key)
+	if InCombatLockdown() then
+		chat("can't destroy items during combat.")
+		return
+	end
+	local count, stacks, hint = ns.Destroyable(row.key)
 	if count == 0 then
 		chat(cantDestroyText(row) .. ".")
 		return
@@ -246,7 +265,7 @@ local function confirmDestroy(row)
 			BreakUpLargeNumbers(left))
 	end
 	text = text .. "\n\nThis can't be undone."
-	StaticPopup_Show("HOARDVALUE_DESTROY", text, nil, { key = row.key, link = row.link })
+	StaticPopup_Show("HOARDVALUE_DESTROY", text, nil, { key = row.key, link = row.link, hint = hint })
 end
 
 local function itemMenu(rowFrame, row)
@@ -273,11 +292,16 @@ local function onRowClick(rowFrame, mouseButton)
 		if HandleModifiedItemClick then HandleModifiedItemClick(row.link) end
 	elseif row.kind == "item" and mouseButton == "RightButton" then
 		itemMenu(rowFrame, row)
-	elseif row.kind == "char" and row.charKey ~= ns.charKey and mouseButton == "RightButton" and MenuUtil then
-		MenuUtil.CreateContextMenu(rowFrame, function(_, root)
-			root:CreateTitle(ns.ClassColored(row.char) .. " - " .. (row.char.realm or ""))
-			root:CreateButton("Forget this character", function() ns.ForgetCharacter(row.charKey) end)
-		end)
+	elseif row.kind == "char" and row.charKey ~= ns.charKey and mouseButton == "RightButton" then
+		local label = ns.ClassColored(row.char) .. " - " .. (row.char.realm or "")
+		if MenuUtil then
+			MenuUtil.CreateContextMenu(rowFrame, function(_, root)
+				root:CreateTitle(label)
+				root:CreateButton("Forget this character", function() ns.ForgetCharacter(row.charKey) end)
+			end)
+		else
+			StaticPopup_Show("HOARDVALUE_FORGET_CHAR", label, nil, row.charKey)
+		end
 	end
 end
 
@@ -477,7 +501,10 @@ local queueRefresh = ns.Debounce(0.1, function()
 	if dirty then refresh() end
 end)
 
+local inShow = false
+
 local function markDirty()
+	if inShow then return end
 	dirty = true
 	queueRefresh()
 end
@@ -582,7 +609,12 @@ local function createList()
 		local header = CreateFrame("Button", nil, inset)
 		header.text = header:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 		header.arrow = header:CreateTexture(nil, "OVERLAY")
-		header.arrow:SetAtlas("auctionhouse-ui-sortarrow", true)
+		if C_Texture and C_Texture.GetAtlasInfo and C_Texture.GetAtlasInfo("auctionhouse-ui-sortarrow") then
+			header.arrow:SetAtlas("auctionhouse-ui-sortarrow", true)
+		else
+			header.arrow:SetTexture("Interface\\Buttons\\UI-SortArrow")
+			header.arrow:SetSize(10, 10)
+		end
 		header:SetHighlightTexture("Interface\\Buttons\\UI-Common-MouseHilight", "ADD")
 		header:SetScript("OnClick", function()
 			local col = columns()[i]
@@ -684,8 +716,10 @@ local function createFrame()
 
 	frame:SetScript("OnShow", function()
 		-- Fresh bags and fresh market prices every time it opens.
-		ns.ScanBags()
 		ns.InvalidatePrices()
+		inShow = true
+		ns.ScanBags()
+		inShow = false
 		dirty = true
 		refresh()
 	end)

@@ -148,11 +148,6 @@ end
 -- quest items, and the account-bound kinds above. nil until the item has loaded.
 local PICKUP_BIND = { [ItemBind.OnAcquire or 1] = true, [ItemBind.Quest or 4] = true }
 
-function ns.BoundWhenLooted(link)
-	local ok, _, _, _, _, _, _, _, _, _, _, _, _, _, bindType = pcall(GetItemInfo, link)
-	if ok and bindType then return PICKUP_BIND[bindType] or ACCOUNT_BIND[bindType] or false end
-end
-
 -- Binding lines on a tooltip that mean this copy can't be sold, even when the
 -- same item can also drop tradeable (a BoE world drop that comes Warbound until
 -- equipped from a delve, say).
@@ -164,16 +159,33 @@ for _, name in ipairs({ "ITEM_SOULBOUND", "ITEM_BIND_QUEST",
 	if text then BOUND_LINES[text] = true end
 end
 
-local function tooltipSaysBound(bag, slot)
-	if not (C_TooltipInfo and C_TooltipInfo.GetBagItem) then return false end
-	local ok, data = pcall(C_TooltipInfo.GetBagItem, bag, slot)
-	local lines = ok and data and data.lines
+local function linesSayBound(data)
+	local lines = data and data.lines
 	if not lines then return false end
 	-- The binding line sits just under the name, item level and tags.
 	for i = 2, math.min(#lines, 6) do
 		if BOUND_LINES[lines[i].leftText] then return true end
 	end
 	return false
+end
+
+local function tooltipSaysBound(bag, slot)
+	if not (C_TooltipInfo and C_TooltipInfo.GetBagItem) then return false end
+	local ok, data = pcall(C_TooltipInfo.GetBagItem, bag, slot)
+	return ok and linesSayBound(data) or false
+end
+
+local function hyperlinkSaysBound(link)
+	if not (link and C_TooltipInfo and C_TooltipInfo.GetHyperlink) then return false end
+	local ok, data = pcall(C_TooltipInfo.GetHyperlink, link)
+	return ok and linesSayBound(data) or false
+end
+
+function ns.BoundWhenLooted(link)
+	local ok, _, _, _, _, _, _, _, _, _, _, _, _, _, bindType = pcall(GetItemInfo, link)
+	if ok and bindType then
+		return PICKUP_BIND[bindType] or ACCOUNT_BIND[bindType] or hyperlinkSaysBound(link) or false
+	end
 end
 
 local function isBound(info, bag, slot, link)
@@ -428,6 +440,17 @@ local function reachableBags()
 	return list
 end
 
+local function stackAt(bag, slot, key, base)
+	local info = C_Container.GetContainerItemInfo(bag, slot)
+	local link = info and info.hyperlink
+	-- The cheap match first; the bound check reads the slot's tooltip.
+	-- A locked stack is being moved or was just destroyed.
+	if link and not info.isLocked and itemKey(link, false) == base
+		and itemKey(link, isBound(info, bag, slot, link)) == key then
+		return { bag = bag, slot = slot, count = info.stackCount or 1 }
+	end
+end
+
 -- Every stack of an item (a report row's key) you can reach right now, and how
 -- many that is in all.
 local function findItem(key)
@@ -435,25 +458,20 @@ local function findItem(key)
 	local stacks, total = {}, 0
 	for _, bag in ipairs(reachableBags()) do
 		for slot = 1, C_Container.GetContainerNumSlots(bag) or 0 do
-			local info = C_Container.GetContainerItemInfo(bag, slot)
-			local link = info and info.hyperlink
-			-- The cheap match first; the bound check reads the slot's tooltip.
-			-- A locked stack is being moved or was just destroyed.
-			if link and not info.isLocked and itemKey(link, false) == base
-				and itemKey(link, isBound(info, bag, slot, link)) == key then
-				local count = info.stackCount or 1
-				stacks[#stacks + 1] = { bag = bag, slot = slot, count = count }
-				total = total + count
+			local stack = stackAt(bag, slot, key, base)
+			if stack then
+				stacks[#stacks + 1] = stack
+				total = total + stack.count
 			end
 		end
 	end
 	return stacks, total
 end
 
--- How many of an item you could destroy right now, and in how many stacks.
+-- How many of an item you could destroy right now, in how many stacks, and the first stack.
 function ns.Destroyable(key)
 	local stacks, total = findItem(key)
-	return total, #stacks
+	return total, #stacks, stacks[1]
 end
 
 -- True when you have the item in a bank that isn't open, so opening it would
@@ -472,8 +490,11 @@ end
 -- Destroys one stack of the item. The game allows one destroy per click, so
 -- this has to run straight from a click, once per stack. Returns how many
 -- were destroyed (0 if the game refused).
-function ns.DestroyItemStack(key)
-	local stack = findItem(key)[1]
+function ns.DestroyItemStack(key, hint)
+	if InCombatLockdown() or (GetCursorInfo and GetCursorInfo()) then return 0 end
+	local base = (key:gsub("#bound$", ""))
+	local stack = hint and hint.bag and hint.slot and stackAt(hint.bag, hint.slot, key, base)
+	if not stack then stack = findItem(key)[1] end
 	if not stack then return 0 end
 	ClearCursor()
 	C_Container.PickupContainerItem(stack.bag, stack.slot)

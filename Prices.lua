@@ -83,11 +83,19 @@ local function auctionPrice(link)
 	end
 end
 
+local TSM_LABELS = {
+	dbmarket = "market value",
+	dbminbuyout = "lowest auction",
+	[ns.TSM_LOWER] = "lower of market and lowest",
+	dbhistorical = "historical",
+	dbregionmarketavg = "region market avg",
+}
+
 function ns.SourceLabel()
 	local db = ns.db
 	local label
 	if ns.TSMAvailable() then
-		label = "TSM (" .. (db.tsmSource == ns.TSM_LOWER and "lower of dbmarket, dbminbuyout" or db.tsmSource) .. ")"
+		label = "TSM (" .. (TSM_LABELS[db.tsmSource] or db.tsmSource) .. ")"
 	elseif ns.AuctionatorAPI() then
 		label = "Auctionator"
 	elseif ns.CraftonomicsAPI() then

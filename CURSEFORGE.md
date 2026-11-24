@@ -75,11 +75,11 @@ This addon was made with AI.
 
 ## B. Upload File form
 
-**File:** `dist\HoardValue-1.6.1.zip`
+**File:** `dist\HoardValue-1.6.2.zip`
 
 **Display name**
 ```
-Hoard Value 1.6.1
+Hoard Value 1.6.2
 ```
 
 **Release type:** `Release`
@@ -88,6 +88,11 @@ Hoard Value 1.6.1
 
 **Changelog** (paste only the newest part; 1.0.0 is already on CurseForge)
 ```markdown
+1.6.2
+- Fixed: loot announcements now recognize multi-item stacks in non-English game clients and treat Warbound until equipped drops as bound.
+- Fixed: destroying an item stack from the window won't run during combat or while you're holding something on your cursor, and targets the exact bag slot you clicked.
+- Fixed: the price-source label shows clear names like "TSM (lowest auction)" instead of raw TSM codes, right-clicking a character to forget it works on Classic flavors too, and opening the window no longer rebuilds the list twice.
+
 1.6.1
 - Fixed: legacy warbound items no longer interfere with unbound auction prices for the same item.
 - Fixed: looting right after login no longer errors before settings finish loading, Classic item tooltips display reliably, and small labels in the window are larger and easier to read.
